@@ -1,0 +1,29 @@
+name: Documentation correction
+description: Report something inaccurate, outdated, or unclear in the guide.
+labels: ["correction"]
+body:
+  - type: input
+    id: page
+    attributes:
+      label: Page
+      description: Which page or section is affected? (e.g., "Workflow → IPTV Checker")
+      placeholder: workflow/01-iptv-checker.md
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is wrong
+      description: Quote the current text and explain why it is incorrect or unclear.
+    validations:
+      required: true
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Suggested fix (optional)
+      description: If you have a proposed correction, paste it here.
+  - type: input
+    id: plugin-version
+    attributes:
+      label: Plugin version (if relevant)
+      description: Which plugin version were you running when you noticed the issue?

@@ -1,0 +1,75 @@
+site_name: Dispatcharr Plugin Workflow
+site_description: A practical, step-by-step workflow for cleaning up your Dispatcharr lineup using the PiratesIRC plugin suite.
+site_url: https://piratesirc.github.io/Dispatcharr-Plugin-Workflow/
+repo_url: https://github.com/PiratesIRC/Dispatcharr-Plugin-Workflow
+repo_name: PiratesIRC/Dispatcharr-Plugin-Workflow
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.action.edit
+    - toc.follow
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  icon:
+    repo: fontawesome/brands/github
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - tables
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+
+plugins:
+  - search
+
+nav:
+  - Home: index.md
+  - Prerequisites: prerequisites.md
+  - Workflow:
+    - 1. IPTV Checker: workflow/01-iptv-checker.md
+    - 2. Channel Mapparr: workflow/02-channel-mapparr.md
+    - 3. Stream Mapparr: workflow/03-stream-mapparr.md
+    - 4. EPG Janitor: workflow/04-epg-janitor.md
+    - Bonus - Event Channel Managarr: workflow/05-event-channel-managarr.md
+  - Reference:
+    - Plugin Links: reference/plugin-links.md
+    - Related Resources: reference/related-resources.md
+  - Contributing: contributing.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/PiratesIRC

@@ -1,0 +1,28 @@
+name: New content suggestion
+description: Suggest a new section, screenshot, troubleshooting note, or plugin coverage.
+labels: ["enhancement"]
+body:
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Type of content
+      options:
+        - New section
+        - Screenshot
+        - Troubleshooting note
+        - Additional plugin coverage
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      description: What should be added, and where in the guide should it live?
+    validations:
+      required: true
+  - type: textarea
+    id: rationale
+    attributes:
+      label: Why is this useful
+      description: What problem does it solve for readers?
