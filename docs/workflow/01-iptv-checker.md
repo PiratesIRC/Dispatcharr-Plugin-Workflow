@@ -47,7 +47,7 @@ flowchart TD
 - **Enable Scheduled Checks**, **Scheduled Check Times** (cron syntax), **Scheduler Timezone**, **Export CSV for Schedule**.
 - **Use Windowed Schedule** with **Window End Mode**, **Window Duration**, **Window End Time**, and **Reset Window Progress** for time-bounded scans that pick up where they left off.
 
-![IPTV Checker settings panel with parallel workers and scheduler visible](../../screenshots/iptv-checker-settings.png)
+![IPTV Checker settings panel with parallel workers and scheduler visible](../screenshots/iptv-checker-settings.png)
 
 ## Action Sequence
 
@@ -87,4 +87,4 @@ Wait for `✅ COMPLETED` in the log before queuing the next action — the UI bu
 - Run this plugin first so downstream plugins have accurate stream data to work with.
 - The standard Dispatcharr container ships with `ffmpeg`, `ffprobe`, and `pytz` already installed — no manual setup is needed.
 
-![Enable Scheduled Checks with a cron expression and Windowed Schedule enabled](../../screenshots/iptv-checker-scheduler.png)
+![Enable Scheduled Checks with a cron expression and Windowed Schedule enabled](../screenshots/iptv-checker-scheduler.png)

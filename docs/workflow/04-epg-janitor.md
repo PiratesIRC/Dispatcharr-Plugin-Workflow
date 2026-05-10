@@ -44,7 +44,7 @@ flowchart TD
 - **Custom Channel Aliases (JSON):** Manual overrides for channels whose name does not match any EPG entry by fuzzy logic.
 - **Fuzzy matching toggles:** Ignore Quality Tags, Regional Tags, Geographic Prefixes, and Miscellaneous Tags (all on by default).
 
-![EPG Janitor settings with EPG Sources to Match and the two confidence thresholds](../../screenshots/epg-janitor-settings.png)
+![EPG Janitor settings with EPG Sources to Match and the two confidence thresholds](../screenshots/epg-janitor-settings.png)
 
 ## Action Sequence
 

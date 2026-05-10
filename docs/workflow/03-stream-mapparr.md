@@ -47,7 +47,7 @@ flowchart TD
 - **Webhook URL** and **Fire Webhook On Completion** for external notifications.
 - **Timezone** plus **Scheduled Run Times** (HHMM, comma-separated, e.g., `0400,1600`) for the built-in scheduler.
 
-![Profile Name field with a non-All profile selected](../../screenshots/stream-mapparr-profile-selection.png)
+![Profile Name field with a non-All profile selected](../screenshots/stream-mapparr-profile-selection.png)
 
 ## Action Sequence
 
