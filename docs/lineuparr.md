@@ -1,6 +1,6 @@
 # Alternative: Lineuparr
 
-**Repository:** [Dispatcharr-Lineuparr-Plugin](https://github.com/PiratesIRC/Dispatcharr-Lineuparr-Plugin) &nbsp; [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/PiratesIRC/Dispatcharr-Lineuparr-Plugin)
+**Repository:** [Dispatcharr-Lineuparr-Plugin](https://github.com/PiratesIRC/Dispatcharr-Lineuparr-Plugin) &nbsp; [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/PiratesIRC/Dispatcharr-Lineuparr-Plugin) &nbsp; [![Discord](https://img.shields.io/badge/Discord-Discussion-5865F2?logo=discord&logoColor=white)](https://discord.gg/Sp45V5BcxU)
 
 ## Goal
 
