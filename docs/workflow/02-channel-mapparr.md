@@ -60,10 +60,6 @@ flowchart TD
 9. Use **Import M3U Streams** if you need to pull streams from an M3U source, and **Clear CSV Exports** to clean up old preview files.
 
 !!! info "📸 Screenshot suggestion"
-    **File:** `screenshots/channel-mapparr-dry-run-csv.png`
-    **Show:** an excerpt of the dry-run CSV with `original_name`, `proposed_name`, and `match_score` columns visible. Demonstrates the review step before committing.
-
-!!! info "📸 Screenshot suggestion"
     **File:** `screenshots/channel-mapparr-category-groups.png`
     **Show:** the Channels page after **Organize by Category** has run, with category groups (News, Sports, Entertainment) visible in the group sidebar. Before/after pair if practical.
 

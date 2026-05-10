@@ -78,6 +78,10 @@ nav:
     - Related Resources: reference/related-resources.md
   - Contributing: contributing.md
 
+copyright: >
+  All product names, trademarks, and registered trademarks mentioned in this project are the property of their respective owners.
+  Channel lineup data is community-compiled from publicly available information and is not affiliated with or endorsed by any TV provider.
+
 extra:
   social:
     - icon: fontawesome/brands/github

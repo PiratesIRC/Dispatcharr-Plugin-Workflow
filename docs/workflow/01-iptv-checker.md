@@ -62,10 +62,6 @@ flowchart TD
 7. Export with **Export Results to CSV**. Use **Clear CSV Exports** to clean up old exports.
 8. Use **Cancel Stream Check** to stop a running scan, **Cleanup Orphaned Tasks** to clear stale Celery entries, or **Check Scheduler Status** to verify scheduled runs.
 
-!!! info "📸 Screenshot suggestion"
-    **File:** `screenshots/iptv-checker-results.png`
-    **Show:** the **View Last Results** table with a mix of working, dead, and low-framerate streams. Lets readers recognize what a successful run looks like.
-
 ## Important Notes
 
 !!! warning "Plan for hours, not minutes"

@@ -14,20 +14,16 @@ The guide currently calls for these screenshots (placeholders are present in the
 ### IPTV Checker
 
 - `iptv-checker-settings.png` — full settings panel, parallel workers + scheduler visible
-- `iptv-checker-results.png` — View Last Results table with mixed working / dead / slow streams
 - `iptv-checker-scheduler.png` — Enable Scheduled Checks with cron + Use Windowed Schedule
 
 ### Channel Mapparr
 
 - `channel-mapparr-settings.png` — settings with Channel Databases, Match Sensitivity, Dry Run Mode
-- `channel-mapparr-dry-run-csv.png` — dry-run CSV excerpt with original / proposed / score columns
 - `channel-mapparr-category-groups.png` — Channels page after Organize by Category
 
 ### Stream Mapparr
 
 - `stream-mapparr-profile-selection.png` — Profile Name field with non-"All" profile selected
-- `stream-mapparr-preview-csv.png` — dry-run CSV header + recommendation block
-- `stream-mapparr-docker-logs.png` — `docker logs -f` running through to `✅ COMPLETED`
 
 ### EPG Janitor
 
@@ -39,14 +35,10 @@ The guide currently calls for these screenshots (placeholders are present in the
 ### Event Channel Managarr
 
 - `event-channel-managarr-hide-rules.png` — Hide Rules Priority field + regex fields
-- `event-channel-managarr-dry-run.png` — Dry Run CSV with `reason` and `hide_rule` columns
-- `event-channel-managarr-before-after.png` — Channels page before / after a Run Now
 
 ### Lineuparr
 
 - `lineuparr-settings.png` — Lineup File / M3U Source / Channel Profile fields
-- `lineuparr-preview.png` — Preview Stream Match CSV
-- `lineuparr-result.png` — Channels page after Full Sync
 
 ## Reference syntax
 

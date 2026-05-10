@@ -64,10 +64,6 @@ flowchart TD
 9. Run **Manage Channel Visibility** to toggle channels based on whether streams are attached.
 10. Use **Update Schedule** to save scheduler settings, and **Clear Operation Lock** if a previous run got stuck.
 
-!!! info "📸 Screenshot suggestion"
-    **File:** `screenshots/stream-mapparr-preview-csv.png`
-    **Show:** the dry-run CSV header with its recommendation block, plus the first several match rows showing channel name, matched stream, and score. The recommendation block is a unique feature worth highlighting.
-
 ## Important Notes
 
 !!! danger "Background operations"
@@ -77,7 +73,3 @@ flowchart TD
 - Operations can take 5–15+ minutes on large catalogs.
 - The Channel Profile must exist and must not be "All" — the plugin will refuse to run otherwise.
 - To stop a runaway operation, restart the container: `docker restart dispatcharr`. The operation lock expires after 10 minutes on its own, or you can clear it manually with **Clear Operation Lock**.
-
-!!! info "📸 Screenshot suggestion"
-    **File:** `screenshots/stream-mapparr-docker-logs.png`
-    **Show:** a `docker logs -f dispatcharr | grep "Stream-Mapparr"` terminal output running through to a `✅ COMPLETED` line. Anchors the "watch the logs, not the button" guidance.

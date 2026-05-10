@@ -69,16 +69,8 @@ flowchart TD
 6. Run **Re-sort Streams by Quality** to re-rank alternate streams attached to each channel.
 7. Use **Clear CSV Exports** to clean up old preview files.
 
-!!! info "📸 Screenshot suggestion"
-    **File:** `screenshots/lineuparr-preview.png`
-    **Show:** the Preview Stream Match CSV with `channel_number`, `channel_name`, `matched_stream`, and `match_score` columns. Lets readers see what a "good" match preview looks like before committing.
-
 ## Important Notes
 
 - **Requires Dispatcharr v0.20.0+** and at least one M3U source.
 - Lineuparr is an alternative to the [main workflow](index.md), not a replacement for the individual plugins. You can run Lineuparr first and still apply the per-plugin steps for fine-tuning afterwards (e.g., Stream-Mapparr's quality re-ranking, EPG Janitor's heal pass).
 - Custom Channel Aliases is the escape hatch when fuzzy matching fails for a specific channel — define the override once and Full Sync will respect it on every run.
-
-!!! info "📸 Screenshot suggestion"
-    **File:** `screenshots/lineuparr-result.png`
-    **Show:** the Dispatcharr Channels page after a successful Full Sync, with provider channel numbers and category groups visible. Demonstrates the end state.

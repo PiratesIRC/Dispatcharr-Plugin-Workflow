@@ -65,17 +65,9 @@ flowchart TD
 7. Optionally run **🧹 Remove EPG from Hidden** to keep the guide clean.
 8. Use **🩺 Check Scheduler** to verify scheduled runs are registered, **🧼 Cleanup Orphaned Tasks** to clear stale Celery entries, and **🗑️ Clear CSV Exports** to remove old preview files.
 
-!!! info "📸 Screenshot suggestion"
-    **File:** `screenshots/event-channel-managarr-dry-run.png`
-    **Show:** an excerpt of the Dry Run CSV with `channel_name`, `action` (hide / show), `reason`, and `hide_rule` columns visible. The `hide_rule` column is what tells you which rule fired — central to debugging unexpected results.
-
 ## Important Notes
 
 - Each scan covers all channels in the profile — visible and hidden — so a channel that picks up a new event will be re-shown automatically on the next run.
 - The first matching rule in the priority list wins. Subsequent rules are not evaluated for that channel.
 - The **Force Visible** regex always wins over hide rules. Useful for keeping news, weather, or always-on channels visible.
 - Date extraction supports many formats (`Nov 8 16:00`, `12/25/2024`, `start:2024-12-25 20:00:00`, ISO formats, ordinal dates, and more). The grace period prevents premature hiding of events that run past midnight.
-
-!!! info "📸 Screenshot suggestion"
-    **File:** `screenshots/event-channel-managarr-before-after.png`
-    **Show:** the Dispatcharr Channels page filtered to your event group, before a Run Now (mostly hidden, one or two visible) and after (only currently-active events visible). Best demonstration of the plugin's value.
