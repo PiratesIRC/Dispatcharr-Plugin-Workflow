@@ -25,7 +25,7 @@ This repository is a **guide**, not a plugin. Contributions should improve the a
 The site is built with [MkDocs Material](https://squidfunk.github.io/mkdocs-material/).
 
 ```bash
-pip install mkdocs-material
+pip install mkdocs-material mkdocs-git-revision-date-localized-plugin
 mkdocs serve
 ```
 

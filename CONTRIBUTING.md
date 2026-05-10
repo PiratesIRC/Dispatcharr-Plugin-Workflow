@@ -9,7 +9,7 @@ Source: [`docs/contributing.md`](docs/contributing.md)
 ## Quick start
 
 ```bash
-pip install mkdocs-material
+pip install mkdocs-material mkdocs-git-revision-date-localized-plugin
 mkdocs serve
 ```
 

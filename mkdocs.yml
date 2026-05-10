@@ -17,6 +17,7 @@ theme:
     - search.highlight
     - content.code.copy
     - content.action.edit
+    - content.action.view
     - toc.follow
   palette:
     - media: "(prefers-color-scheme: light)"
@@ -57,6 +58,10 @@ markdown_extensions:
 
 plugins:
   - search
+  - git-revision-date-localized:
+      type: date
+      enable_creation_date: true
+      fallback_to_build_date: true
 
 nav:
   - Home: index.md
