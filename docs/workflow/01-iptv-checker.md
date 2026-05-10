@@ -6,6 +6,26 @@
 
 Probe each stream with `ffprobe`, mark dead or low-framerate sources, and sync technical metadata (codecs, resolution, bitrate, FPS) back into the Dispatcharr database. The metadata gathered here is what Stream-Mapparr later uses to rank stream quality and filter out broken sources.
 
+## Plugin Flow
+
+```mermaid
+flowchart TD
+    A[Save settings] --> B[Validate Settings]
+    B --> C[Load Group(s)]
+    C --> D[Start Stream Check]
+    D --> E{Long run<br/>hours possible}
+    E --> F[View Check Progress]
+    E --> G[docker logs -f]
+    F --> H[View Last Results]
+    G --> H
+    H --> I[Rename / Move /<br/>Delete dead channels]
+    H --> J[Add format suffix<br/>UHD/FHD/HD/SD]
+    H --> K[Export CSV]
+    I --> Z([Metadata feeds Stream Mapparr])
+    J --> Z
+    K --> Z
+```
+
 ## Configuration Options
 
 - **Groups to Check:** Comma-separated group names; empty = all groups. Wildcards supported (e.g., `US-*`, `*Sports*`).
@@ -24,6 +44,10 @@ Probe each stream with `ffprobe`, mark dead or low-framerate sources, and sync t
 - **Enable Scheduled Checks**, **Scheduled Check Times** (cron syntax), **Scheduler Timezone**, **Export CSV for Schedule**.
 - **Use Windowed Schedule** with **Window End Mode**, **Window Duration**, **Window End Time**, and **Reset Window Progress** for time-bounded scans that pick up where they left off.
 
+!!! info "📸 Screenshot suggestion"
+    **File:** `screenshots/iptv-checker-settings.png`
+    **Show:** the full IPTV Checker settings panel, ideally with parallel workers and the scheduler section visible. These are the two settings most people need to tune.
+
 ## Action Sequence
 
 1. Save scan preferences.
@@ -35,8 +59,37 @@ Probe each stream with `ffprobe`, mark dead or low-framerate sources, and sync t
 7. Export with **Export Results to CSV**. Use **Clear CSV Exports** to clean up old exports.
 8. Use **Cancel Stream Check** to stop a running scan, **Cleanup Orphaned Tasks** to clear stale Celery entries, or **Check Scheduler Status** to verify scheduled runs.
 
+!!! info "📸 Screenshot suggestion"
+    **File:** `screenshots/iptv-checker-results.png`
+    **Show:** the **View Last Results** table with a mix of working, dead, and low-framerate streams. Lets readers recognize what a successful run looks like.
+
 ## Important Notes
+
+!!! warning "Plan for hours, not minutes"
+    A single-threaded check can take **24 hours on ~6,000 streams**. Even with parallel workers, large catalogs commonly run for several hours. Schedule the plugin rather than running it interactively.
+
+### Recommended approach for large catalogs
+
+- **Use the scheduler.** Enable **Scheduled Checks** with a cron time during your low-traffic hours rather than triggering scans manually. The scheduler also survives Dispatcharr restarts.
+- **Tune parallel workers.** If your IPTV provider allows N concurrent connections, set **Number of Parallel Workers** to roughly **half of N**. Going higher risks the provider rate-limiting or banning your account; going much lower wastes time.
+- **Consider Windowed Scheduling** for very large catalogs. The plugin will pick up where it left off on the next window, so a multi-day scan does not need to complete in one sitting.
+
+### Watching progress
+
+If the browser tab is open, **View Check Progress** gives a live ETA. If you closed the tab or the browser timed out, watch the container logs:
+
+```bash
+docker logs -f dispatcharr | grep "IPTV-Checker"
+```
+
+Wait for `✅ COMPLETED` in the log before queuing the next action — the UI button re-enabling does not always mean the scan finished.
+
+### Other notes
 
 - Metadata syncing happens automatically during the check and feeds Stream-Mapparr's quality ranking and dead-stream filtering.
 - Run this plugin first so downstream plugins have accurate stream data to work with.
 - The standard Dispatcharr container ships with `ffmpeg`, `ffprobe`, and `pytz` already installed — no manual setup is needed.
+
+!!! info "📸 Screenshot suggestion"
+    **File:** `screenshots/iptv-checker-scheduler.png`
+    **Show:** the **Enable Scheduled Checks** section with a cron expression filled in (for example `0 3 * * *`) and **Use Windowed Schedule** enabled. Reinforces the "schedule, do not babysit" recommendation.

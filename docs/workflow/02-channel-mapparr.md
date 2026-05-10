@@ -9,6 +9,24 @@ Standardize the names of channels that already exist in Dispatcharr using countr
 !!! warning
     This plugin does not create channels by default. It works on channels already in your lineup. The optional **Import M3U Streams** action can pull new streams in from an M3U source if you need it.
 
+## Plugin Flow
+
+```mermaid
+flowchart TD
+    A[Save settings<br/>Pick country databases] --> B[Validate Settings]
+    B --> C{Dry Run Mode}
+    C -->|enabled| D[Load & Process Channels<br/>→ CSV preview]
+    D --> E{Review CSV}
+    E -->|too strict| F[Loosen Match Sensitivity]
+    F --> D
+    E -->|looks good| G[Disable Dry Run Mode]
+    G --> H[Load & Process Channels<br/>apply renames]
+    H --> I[Tag Unknown Channels]
+    I --> J[Apply Logos]
+    J --> K[Organize by Category]
+    K --> Z([Standardized lineup])
+```
+
 ## Configuration Options
 
 - **Channel Databases:** Comma-separated 2-letter country codes (default `US`).
@@ -22,6 +40,10 @@ Standardize the names of channels that already exist in Dispatcharr using countr
 - **M3U Source**, **M3U Group Filter**, **Category Filter**, **Custom Import Group Name** — used by the **Import M3U Streams** action.
 - **Rate Limiting:** None / Low / Medium / High. Raise it if Dispatcharr starts returning errors during long runs.
 
+!!! info "📸 Screenshot suggestion"
+    **File:** `screenshots/channel-mapparr-settings.png`
+    **Show:** the settings panel with **Channel Databases**, **Match Sensitivity**, and **Dry Run Mode** visible. These are the three knobs that drive every action.
+
 ## Action Sequence
 
 1. Save settings and select the country databases you want loaded.
@@ -33,6 +55,14 @@ Standardize the names of channels that already exist in Dispatcharr using countr
 7. Optionally run **Apply Logos** for channels missing artwork.
 8. For category sorting, run **Organize by Category** (with **Dry Run Mode** first to preview, then again with it disabled to commit).
 9. Use **Import M3U Streams** if you need to pull streams from an M3U source, and **Clear CSV Exports** to clean up old preview files.
+
+!!! info "📸 Screenshot suggestion"
+    **File:** `screenshots/channel-mapparr-dry-run-csv.png`
+    **Show:** an excerpt of the dry-run CSV with `original_name`, `proposed_name`, and `match_score` columns visible. Demonstrates the review step before committing.
+
+!!! info "📸 Screenshot suggestion"
+    **File:** `screenshots/channel-mapparr-category-groups.png`
+    **Show:** the Channels page after **Organize by Category** has run, with category groups (News, Sports, Entertainment) visible in the group sidebar. Before/after pair if practical.
 
 ## Important Notes
 

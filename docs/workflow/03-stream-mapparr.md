@@ -6,6 +6,25 @@
 
 Match streams to channels via fuzzy logic, rank alternates by physical quality (resolution and FPS), prioritize preferred M3U sources, and toggle channel visibility based on whether streams are attached. Filters out dead 0x0 streams using IPTV Checker metadata and deduplicates stream names.
 
+## Plugin Flow
+
+```mermaid
+flowchart TD
+    A[Save settings<br/>Profile must NOT be 'All'] --> B[Validate Settings]
+    B --> C[Load/Process Channels]
+    C --> D{Dry Run Mode}
+    D -->|enabled| E[Match & Assign Streams<br/>→ CSV preview]
+    E --> F{Review CSV<br/>recommendations in header}
+    F -->|adjust| G[Tune Match Sensitivity<br/>or Custom Ignore Tags]
+    G --> E
+    F -->|looks good| H[Disable Dry Run Mode]
+    H --> I[Match & Assign Streams]
+    I --> J[Sort Alternate Streams]
+    J --> K[Match US OTA Only<br/>for callsign refinement]
+    K --> L[Manage Channel Visibility]
+    L --> Z([Channels with ranked streams])
+```
+
 ## Configuration Options
 
 - **Profile Name:** Required. Must be a Channel Profile other than "All".
@@ -25,6 +44,10 @@ Match streams to channels via fuzzy logic, rank alternates by physical quality (
 - **Webhook URL** and **Fire Webhook On Completion** for external notifications.
 - **Timezone** plus **Scheduled Run Times** (HHMM, comma-separated, e.g., `0400,1600`) for the built-in scheduler.
 
+!!! info "📸 Screenshot suggestion"
+    **File:** `screenshots/stream-mapparr-profile-selection.png`
+    **Show:** the **Profile Name** field with a non-"All" profile selected. The profile-not-"All" rule is the most common cause of refused runs — a screenshot makes it unmissable.
+
 ## Action Sequence
 
 1. Save settings and select your Channel Profile (not "All").
@@ -38,6 +61,10 @@ Match streams to channels via fuzzy logic, rank alternates by physical quality (
 9. Run **Manage Channel Visibility** to toggle channels based on whether streams are attached.
 10. Use **Update Schedule** to save scheduler settings, and **Clear Operation Lock** if a previous run got stuck.
 
+!!! info "📸 Screenshot suggestion"
+    **File:** `screenshots/stream-mapparr-preview-csv.png`
+    **Show:** the dry-run CSV header with its recommendation block, plus the first several match rows showing channel name, matched stream, and score. The recommendation block is a unique feature worth highlighting.
+
 ## Important Notes
 
 !!! danger "Background operations"
@@ -47,3 +74,7 @@ Match streams to channels via fuzzy logic, rank alternates by physical quality (
 - Operations can take 5–15+ minutes on large catalogs.
 - The Channel Profile must exist and must not be "All" — the plugin will refuse to run otherwise.
 - To stop a runaway operation, restart the container: `docker restart dispatcharr`. The operation lock expires after 10 minutes on its own, or you can clear it manually with **Clear Operation Lock**.
+
+!!! info "📸 Screenshot suggestion"
+    **File:** `screenshots/stream-mapparr-docker-logs.png`
+    **Show:** a `docker logs -f dispatcharr | grep "Stream-Mapparr"` terminal output running through to a `✅ COMPLETED` line. Anchors the "watch the logs, not the button" guidance.
