@@ -50,10 +50,6 @@ flowchart TD
 - **Rate Limiting:** None / Low / Medium / High.
 - **Scheduled Run Times** (HHMM, comma-separated) and **Enable Scheduled CSV Export**.
 
-!!! info "📸 Screenshot suggestion"
-    **File:** `screenshots/event-channel-managarr-hide-rules.png`
-    **Show:** the **Hide Rules Priority** field with the default order, and the three regex fields below it. Rule ordering is the central concept of the plugin and worth a clear picture.
-
 ## Action Sequence
 
 1. Save settings and the required Channel Profile name(s).

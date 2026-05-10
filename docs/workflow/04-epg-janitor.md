@@ -58,14 +58,6 @@ flowchart TD
 8. Use **👁️‍🗨️ Strip Hidden EPG** to drop EPG assignments from channels that are not visible in any configured profile.
 9. Use **📊 View Last Results**, **📄 Export CSV**, or **🗑️ Clear Exports** to manage CSV output.
 
-!!! info "📸 Screenshot suggestion"
-    **File:** `screenshots/epg-janitor-auto-match-preview.png`
-    **Show:** the Preview Auto-Match CSV with `channel`, `proposed_epg`, `confidence_score`, and `source` columns. Helps readers understand what to look for before committing.
-
-!!! info "📸 Screenshot suggestion"
-    **File:** `screenshots/epg-janitor-heal-preview.png`
-    **Show:** a Heal Preview CSV with rows containing each of the three status codes (`HEALED`, `REPLACEMENT_PREVIEW`, `NO_REPLACEMENT_FOUND`). Best illustration of how to interpret the status codes documented below.
-
 ## Important Notes
 
 - **Auto-Match vs. Scan & Heal:** Auto-Match is for initial setup or bulk assignment. Scan & Heal is for ongoing repair when previously-working EPG breaks. Use Auto-Match first, then schedule periodic Scan & Heal runs for maintenance.
@@ -75,7 +67,3 @@ flowchart TD
     - `REPLACEMENT_PREVIEW` — below threshold, needs manual review
     - `NO_REPLACEMENT_FOUND` — no working alternative in your configured sources
 - EPG removal and renaming are permanent. All destructive actions require confirmation.
-
-!!! info "📸 Screenshot suggestion"
-    **File:** `screenshots/epg-janitor-before-after.png`
-    **Show:** the Dispatcharr TV Guide before EPG Janitor (rows of "No Program Information Available") and after (program data populated). Most compelling demonstration of what this plugin actually fixes.

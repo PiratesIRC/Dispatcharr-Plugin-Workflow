@@ -28,13 +28,6 @@ The guide currently calls for these screenshots (placeholders are present in the
 ### EPG Janitor
 
 - `epg-janitor-settings.png` — EPG Sources to Match + the two confidence thresholds
-- `epg-janitor-auto-match-preview.png` — Preview Auto-Match CSV
-- `epg-janitor-heal-preview.png` — Heal Preview CSV showing all three status codes
-- `epg-janitor-before-after.png` — TV Guide before / after EPG repair
-
-### Event Channel Managarr
-
-- `event-channel-managarr-hide-rules.png` — Hide Rules Priority field + regex fields
 
 ### Lineuparr
 
