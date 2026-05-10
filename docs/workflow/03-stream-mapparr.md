@@ -6,23 +6,26 @@
 
 Match streams to channels via fuzzy logic, rank alternates by physical quality (resolution and FPS), prioritize preferred M3U sources, and toggle channel visibility based on whether streams are attached. Filters out dead 0x0 streams using IPTV Checker metadata and deduplicates stream names.
 
+!!! danger "Back up your database first"
+    This plugin overwrites stream assignments and toggles channel visibility in bulk. [Back up the Dispatcharr database](../prerequisites.md#back-up-the-database) before running any actions.
+
 ## Plugin Flow
 
 ```mermaid
 flowchart TD
-    A[Save settings<br/>Profile must NOT be 'All'] --> B[Validate Settings]
-    B --> C[Load/Process Channels]
-    C --> D{Dry Run Mode}
-    D -->|enabled| E[Match & Assign Streams<br/>→ CSV preview]
-    E --> F{Review CSV<br/>recommendations in header}
-    F -->|adjust| G[Tune Match Sensitivity<br/>or Custom Ignore Tags]
+    A["Save settings<br/>Profile must NOT be All"] --> B["Validate Settings"]
+    B --> C["Load and Process Channels"]
+    C --> D{"Dry Run Mode"}
+    D -->|enabled| E["Match and Assign Streams<br/>CSV preview"]
+    E --> F{"Review CSV<br/>recommendations in header"}
+    F -->|adjust| G["Tune Match Sensitivity<br/>or Custom Ignore Tags"]
     G --> E
-    F -->|looks good| H[Disable Dry Run Mode]
-    H --> I[Match & Assign Streams]
-    I --> J[Sort Alternate Streams]
-    J --> K[Match US OTA Only<br/>for callsign refinement]
-    K --> L[Manage Channel Visibility]
-    L --> Z([Channels with ranked streams])
+    F -->|looks good| H["Disable Dry Run Mode"]
+    H --> I["Match and Assign Streams"]
+    I --> J["Sort Alternate Streams"]
+    J --> K["Match US OTA Only<br/>for callsign refinement"]
+    K --> L["Manage Channel Visibility"]
+    L --> Z(["Channels with ranked streams"])
 ```
 
 ## Configuration Options

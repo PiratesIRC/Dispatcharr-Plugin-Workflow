@@ -9,22 +9,25 @@ Standardize the names of channels that already exist in Dispatcharr using countr
 !!! warning
     This plugin does not create channels by default. It works on channels already in your lineup. The optional **Import M3U Streams** action can pull new streams in from an M3U source if you need it.
 
+!!! danger "Back up your database first"
+    This plugin makes bulk channel renames and group reassignments that cannot be undone. [Back up the Dispatcharr database](../prerequisites.md#back-up-the-database) before running any actions.
+
 ## Plugin Flow
 
 ```mermaid
 flowchart TD
-    A[Save settings<br/>Pick country databases] --> B[Validate Settings]
-    B --> C{Dry Run Mode}
-    C -->|enabled| D[Load & Process Channels<br/>→ CSV preview]
-    D --> E{Review CSV}
-    E -->|too strict| F[Loosen Match Sensitivity]
+    A["Save settings<br/>Pick country databases"] --> B["Validate Settings"]
+    B --> C{"Dry Run Mode"}
+    C -->|enabled| D["Load and Process Channels<br/>CSV preview"]
+    D --> E{"Review CSV"}
+    E -->|too strict| F["Loosen Match Sensitivity"]
     F --> D
-    E -->|looks good| G[Disable Dry Run Mode]
-    G --> H[Load & Process Channels<br/>apply renames]
-    H --> I[Tag Unknown Channels]
-    I --> J[Apply Logos]
-    J --> K[Organize by Category]
-    K --> Z([Standardized lineup])
+    E -->|looks good| G["Disable Dry Run Mode"]
+    G --> H["Load and Process Channels<br/>apply renames"]
+    H --> I["Tag Unknown Channels"]
+    I --> J["Apply Logos"]
+    J --> K["Organize by Category"]
+    K --> Z(["Standardized lineup"])
 ```
 
 ## Configuration Options

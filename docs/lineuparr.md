@@ -6,22 +6,22 @@
 
 Mirror a real TV provider's channel lineup in one operation: create channel groups, create channels with the provider's channel numbering, fuzzy-match streams from M3U sources, assign EPG data, and assign logos. If you would rather not run the five-step workflow in this guide, Lineuparr is the one-click alternative.
 
-!!! warning
-    Back up your Dispatcharr database before running Lineuparr. The full sync touches groups, channels, streams, EPG assignments, and logos in a single transaction.
+!!! danger "Back up your database first"
+    The full sync touches groups, channels, streams, EPG assignments, and logos in a single transaction. [Back up the Dispatcharr database](prerequisites.md#back-up-the-database) before running any actions.
 
 ## Plugin Flow
 
 ```mermaid
 flowchart TD
-    A[Pick Lineup File<br/>e.g. DIRECTV Premier] --> B[Set M3U Source +<br/>Channel Profile]
-    B --> C[Validate Settings]
-    C --> D[Preview Stream Match<br/>→ CSV preview]
-    D --> E{Review CSV}
-    E -->|adjust| F[Tune Match Sensitivity<br/>or Custom Aliases]
+    A["Pick Lineup File<br/>e.g. DIRECTV Premier"] --> B["Set M3U Source and<br/>Channel Profile"]
+    B --> C["Validate Settings"]
+    C --> D["Preview Stream Match<br/>CSV preview"]
+    D --> E{"Review CSV"}
+    E -->|adjust| F["Tune Match Sensitivity<br/>or Custom Aliases"]
     F --> D
-    E -->|looks good| G[Full Sync<br/>groups + channels + streams + EPG + logos]
-    G --> H[Re-sort Streams by Quality]
-    H --> Z([Mirrored provider lineup])
+    E -->|looks good| G["Full Sync<br/>groups, channels, streams, EPG, logos"]
+    G --> H["Re-sort Streams by Quality"]
+    H --> Z(["Mirrored provider lineup"])
 ```
 
 ## Supported Lineups

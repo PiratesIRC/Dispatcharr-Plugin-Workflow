@@ -6,22 +6,25 @@
 
 Probe each stream with `ffprobe`, mark dead or low-framerate sources, and sync technical metadata (codecs, resolution, bitrate, FPS) back into the Dispatcharr database. The metadata gathered here is what Stream-Mapparr later uses to rank stream quality and filter out broken sources.
 
+!!! danger "Back up your database first"
+    This plugin makes bulk changes that cannot be undone. [Back up the Dispatcharr database](../prerequisites.md#back-up-the-database) before running any actions.
+
 ## Plugin Flow
 
 ```mermaid
 flowchart TD
-    A[Save settings] --> B[Validate Settings]
-    B --> C[Load Group(s)]
-    C --> D[Start Stream Check]
-    D --> E{Long run<br/>hours possible}
-    E --> F[View Check Progress]
-    E --> G[docker logs -f]
-    F --> H[View Last Results]
+    A["Save settings"] --> B["Validate Settings"]
+    B --> C["Load Groups"]
+    C --> D["Start Stream Check"]
+    D --> E{"Long run<br/>hours possible"}
+    E --> F["View Check Progress"]
+    E --> G["docker logs -f"]
+    F --> H["View Last Results"]
     G --> H
-    H --> I[Rename / Move /<br/>Delete dead channels]
-    H --> J[Add format suffix<br/>UHD/FHD/HD/SD]
-    H --> K[Export CSV]
-    I --> Z([Metadata feeds Stream Mapparr])
+    H --> I["Rename / Move /<br/>Delete dead channels"]
+    H --> J["Add format suffix<br/>UHD/FHD/HD/SD"]
+    H --> K["Export CSV"]
+    I --> Z(["Metadata feeds Stream Mapparr"])
     J --> Z
     K --> Z
 ```
@@ -70,7 +73,7 @@ flowchart TD
 
 ### Recommended approach for large catalogs
 
-- **Use the scheduler.** Enable **Scheduled Checks** with a cron time during your low-traffic hours rather than triggering scans manually. The scheduler also survives Dispatcharr restarts.
+- **Use the scheduler.** Enable **Scheduled Checks** with a cron time during your low-traffic hours rather than triggering scans manually. The scheduler also survives Dispatcharr restarts. If cron syntax is unfamiliar, build the expression interactively at [crontab.guru](https://crontab.guru/) — for example, `0 3 * * *` runs once a day at 3 AM.
 - **Tune parallel workers.** If your IPTV provider allows N concurrent connections, set **Number of Parallel Workers** to roughly **half of N**. Going higher risks the provider rate-limiting or banning your account; going much lower wastes time.
 - **Consider Windowed Scheduling** for very large catalogs. The plugin will pick up where it left off on the next window, so a multi-day scan does not need to complete in one sitting.
 

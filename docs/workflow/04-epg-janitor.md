@@ -8,22 +8,25 @@ Find channels that have an EPG source assigned but no actual program data — th
 
 Both features use the same weighted scoring system: callsign 50 points, state 30, city 20, network 10, plus program data validation. This is EPG data-quality cleanup, not database size optimization.
 
+!!! danger "Back up your database first"
+    Bulk EPG assignment and removal cannot be undone. [Back up the Dispatcharr database](../prerequisites.md#back-up-the-database) before running any destructive actions.
+
 ## Plugin Flow
 
 ```mermaid
 flowchart TD
-    A[Save settings<br/>List EPG sources by priority] --> B[✅ Validate Settings]
-    B --> C[👁️ Preview Auto-Match]
-    C --> D{Confidence ≥<br/>Auto-Match Threshold?}
-    D -->|yes| E[🎯 Apply Auto-Match]
-    D -->|no| F[Manual review or<br/>Custom Channel Aliases]
-    E --> G[🔍 Scan Missing]
+    A["Save settings<br/>List EPG sources by priority"] --> B["Validate Settings"]
+    B --> C["Preview Auto-Match"]
+    C --> D{"Confidence above<br/>Auto-Match Threshold?"}
+    D -->|yes| E["Apply Auto-Match"]
+    D -->|no| F["Manual review or<br/>Custom Channel Aliases"]
+    E --> G["Scan Missing"]
     F --> G
-    G --> H[🧹 Heal Preview]
-    H --> I{Confidence ≥<br/>Heal Threshold?}
-    I -->|yes| J[🧹 Apply Heal]
-    I -->|no| K[Manual cleanup:<br/>Suffix / Remove EPG]
-    J --> Z([Working EPG across lineup])
+    G --> H["Heal Preview"]
+    H --> I{"Confidence above<br/>Heal Threshold?"}
+    I -->|yes| J["Apply Heal"]
+    I -->|no| K["Manual cleanup:<br/>Suffix / Remove EPG"]
+    J --> Z(["Working EPG across lineup"])
     K --> Z
 ```
 

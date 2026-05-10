@@ -9,19 +9,22 @@ Automatically toggle the visibility of existing event-style channels (PPV, sport
 !!! warning
     The plugin does not create new channels from keywords. The channels must already exist in your lineup, typically from event-style M3U entries.
 
+!!! danger "Back up your database first"
+    Channel visibility changes and bulk EPG removal cannot be undone. [Back up the Dispatcharr database](../prerequisites.md#back-up-the-database) before running any actions.
+
 ## Plugin Flow
 
 ```mermaid
 flowchart TD
-    A[Save settings<br/>Profile + Hide Rules order] --> B[🔎 Validate]
-    B --> C[💾 Save Schedule]
-    C --> D[👁️ Dry Run<br/>→ CSV with reason + hide_rule]
-    D --> E{Reasons match<br/>your expectations?}
-    E -->|no| F[Reorder Hide Rules<br/>or adjust regex]
+    A["Save settings<br/>Profile and Hide Rules order"] --> B["Validate"]
+    B --> C["Save Schedule"]
+    C --> D["Dry Run<br/>CSV with reason and hide_rule"]
+    D --> E{"Reasons match<br/>your expectations?"}
+    E -->|no| F["Reorder Hide Rules<br/>or adjust regex"]
     F --> D
-    E -->|yes| G[▶️ Run Now<br/>apply visibility]
-    G --> H[🧹 Remove EPG from Hidden<br/>optional cleanup]
-    H --> Z([Event channels self-toggling<br/>on each scheduled run])
+    E -->|yes| G["Run Now<br/>apply visibility"]
+    G --> H["Remove EPG from Hidden<br/>optional cleanup"]
+    H --> Z(["Event channels self-toggling<br/>on each scheduled run"])
 ```
 
 ## Configuration Options

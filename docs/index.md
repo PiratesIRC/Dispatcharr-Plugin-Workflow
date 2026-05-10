@@ -12,29 +12,15 @@ If you prefer to automate most of this in a single action and accept less granul
 
 ```mermaid
 flowchart TD
-    A[M3U + EPG import in Dispatcharr] --> B[1. IPTV Checker]
-    B --> C[2. Channel Mapparr]
-    C --> D[3. Stream Mapparr]
-    D --> E[4. EPG Janitor]
-    E --> F[Bonus: Event Channel Managarr]
-    F --> G([Watchable, maintained lineup])
+    A["M3U + EPG import in Dispatcharr"] --> B["1. IPTV Checker"]
+    B --> C["2. Channel Mapparr"]
+    C --> D["3. Stream Mapparr"]
+    D --> E["4. EPG Janitor"]
+    E --> F["Bonus: Event Channel Managarr"]
+    F --> G(["Watchable, maintained lineup"])
 
-    A -.alternative.-> L[Lineuparr<br/>one-click setup]
+    A -. alternative .-> L["Lineuparr<br/>one-click setup"]
     L -.-> G
-
-    B:::probe
-    C:::organize
-    D:::match
-    E:::epg
-    F:::events
-    L:::alt
-
-    classDef probe fill:#e3f2fd,stroke:#1565c0,color:#0d47a1
-    classDef organize fill:#f3e5f5,stroke:#6a1b9a,color:#4a148c
-    classDef match fill:#e8f5e9,stroke:#2e7d32,color:#1b5e20
-    classDef epg fill:#fff3e0,stroke:#e65100,color:#bf360c
-    classDef events fill:#fce4ec,stroke:#ad1457,color:#880e4f
-    classDef alt fill:#eceff1,stroke:#455a64,color:#263238,stroke-dasharray:4 3
 ```
 
 | Step | Plugin | Purpose |
