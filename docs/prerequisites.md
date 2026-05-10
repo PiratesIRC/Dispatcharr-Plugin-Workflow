@@ -8,9 +8,7 @@ The Channel Profile requirement is strict: Stream-Mapparr will refuse to run aga
 
 If you have not created one, see the Dispatcharr documentation on [Channel Profiles](https://dispatcharr.github.io/Dispatcharr-Docs/channels/?h=channel#channels) — open the Channel Profile drop-down on the Channels page and click the icon next to it to create a new profile.
 
-!!! info "📸 Screenshot suggestion"
-    **File:** `screenshots/prerequisites-channel-profile.png`
-    **Show:** the Channel Profile drop-down on the Channels page with the "Create Profile" icon highlighted, plus the new-profile dialog. This is the single most common stumbling block for first-time users.
+![Channel Profile drop-down with the create-profile icon highlighted](../screenshots/prerequisites-channel-profile.png)
 
 ## Back Up the Database
 

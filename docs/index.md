@@ -32,9 +32,7 @@ flowchart TD
 | Bonus | [Event Channel Managarr](workflow/05-event-channel-managarr.md) | Toggle visibility of event channels based on EPG state. |
 | Alt | [Lineuparr](lineuparr.md) | One-click lineup mirroring real TV providers. |
 
-!!! info "📸 Screenshot suggestion"
-    **File:** `screenshots/dispatcharr-plugins-installed.png`
-    **Show:** the Dispatcharr Plugins page with all six plugins installed and enabled. Helps new readers confirm they have the right setup.
+![Dispatcharr Plugins page with all six plugins installed](../screenshots/dispatcharr-plugins-installed.png)
 
 ## Where to Start
 

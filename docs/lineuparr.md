@@ -51,9 +51,7 @@ flowchart TD
 - **Custom Channel Aliases (JSON):** Manual overrides for channels whose stream name does not match by fuzzy logic.
 - **EPG Sources:** Default `All EPG sources`. Can be narrowed to specific sources.
 
-!!! info "📸 Screenshot suggestion"
-    **File:** `screenshots/lineuparr-settings.png`
-    **Show:** the settings panel with **Lineup File**, **M3U Source**, and **Channel Profile** highlighted. These are the three required choices before any action will work.
+![Lineuparr settings with Lineup File, M3U Source, and Channel Profile fields](../screenshots/lineuparr-settings.png)
 
 ## Action Sequence
 

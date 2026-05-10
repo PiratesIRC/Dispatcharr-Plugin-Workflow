@@ -47,9 +47,7 @@ flowchart TD
 - **Webhook URL** and **Fire Webhook On Completion** for external notifications.
 - **Timezone** plus **Scheduled Run Times** (HHMM, comma-separated, e.g., `0400,1600`) for the built-in scheduler.
 
-!!! info "📸 Screenshot suggestion"
-    **File:** `screenshots/stream-mapparr-profile-selection.png`
-    **Show:** the **Profile Name** field with a non-"All" profile selected. The profile-not-"All" rule is the most common cause of refused runs — a screenshot makes it unmissable.
+![Profile Name field with a non-All profile selected](../../screenshots/stream-mapparr-profile-selection.png)
 
 ## Action Sequence
 

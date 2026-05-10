@@ -43,9 +43,7 @@ flowchart TD
 - **M3U Source**, **M3U Group Filter**, **Category Filter**, **Custom Import Group Name** — used by the **Import M3U Streams** action.
 - **Rate Limiting:** None / Low / Medium / High. Raise it if Dispatcharr starts returning errors during long runs.
 
-!!! info "📸 Screenshot suggestion"
-    **File:** `screenshots/channel-mapparr-settings.png`
-    **Show:** the settings panel with **Channel Databases**, **Match Sensitivity**, and **Dry Run Mode** visible. These are the three knobs that drive every action.
+![Channel Mapparr settings with Channel Databases, Match Sensitivity, and Dry Run Mode](../../screenshots/channel-mapparr-settings.png)
 
 ## Action Sequence
 
@@ -59,9 +57,7 @@ flowchart TD
 8. For category sorting, run **Organize by Category** (with **Dry Run Mode** first to preview, then again with it disabled to commit).
 9. Use **Import M3U Streams** if you need to pull streams from an M3U source, and **Clear CSV Exports** to clean up old preview files.
 
-!!! info "📸 Screenshot suggestion"
-    **File:** `screenshots/channel-mapparr-category-groups.png`
-    **Show:** the Channels page after **Organize by Category** has run, with category groups (News, Sports, Entertainment) visible in the group sidebar. Before/after pair if practical.
+![Channels page after Organize by Category has populated category groups](../../screenshots/channel-mapparr-category-groups.png)
 
 ## Important Notes
 
