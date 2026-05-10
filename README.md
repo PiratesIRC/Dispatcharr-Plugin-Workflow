@@ -2,6 +2,8 @@
 
 A practical, step-by-step workflow for cleaning up your Dispatcharr lineup after M3U and EPG import using the [PiratesIRC](https://github.com/PiratesIRC) plugin suite.
 
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/PiratesIRC/Dispatcharr-Plugin-Workflow)
+
 ## 📖 Read the guide
 
 **→ [piratesirc.github.io/Dispatcharr-Plugin-Workflow](https://piratesirc.github.io/Dispatcharr-Plugin-Workflow/)**

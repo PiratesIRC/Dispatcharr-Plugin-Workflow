@@ -1,6 +1,6 @@
 # 3. Stream Association — Stream Mapparr
 
-**Repository:** [Stream-Mapparr](https://github.com/PiratesIRC/Stream-Mapparr)
+**Repository:** [Stream-Mapparr](https://github.com/PiratesIRC/Stream-Mapparr) &nbsp; [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/PiratesIRC/Stream-Mapparr)
 
 ## Goal
 
