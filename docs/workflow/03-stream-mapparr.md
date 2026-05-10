@@ -8,25 +8,35 @@ Match streams to channels via fuzzy logic, rank alternates by physical quality (
 
 ## Configuration Options
 
-- **Dispatcharr URL / Admin Username / Admin Password.**
 - **Profile Name:** Required. Must be a Channel Profile other than "All".
 - **Channel Groups:** Comma-separated; empty = all.
+- **Stream Groups** and **M3U Sources** to constrain which streams are eligible for matching.
+- **Channel Database:** Default `US`. Determines which country's OTA callsign rules apply.
+- **Restrict Matching To Same Country:** Boolean — only match streams when the country tag matches the channel database.
 - **Overwrite Existing Streams:** Replace current stream assignments (default true).
-- **Fuzzy Match Threshold:** Default 85.
+- **Match Sensitivity:** Default `Normal (80)`. Set to `Loose` if too many channels go unmatched, or `Strict` to reduce false positives.
+- **Prioritize Quality:** When ranking alternates, prefer higher resolution / FPS over source-list order.
+- **Filter Dead Streams:** Skip streams flagged dead by IPTV Checker.
 - **Visible Channel Limit:** How many duplicate channels to keep enabled per group (default 1).
-- **Ignore Tags:** Tags stripped before matching (e.g., `[Dead], (Backup)`).
+- **Custom Ignore Tags:** Tags stripped before matching.
+- **Tag Handling:** How to treat tags during matching (default `Strip All`).
 - **Rate Limiting:** None / Low / Medium / High. Raise it if you see 429 or 5xx errors.
+- **Dry Run Mode:** Toggle to preview matches without writing changes.
+- **Webhook URL** and **Fire Webhook On Completion** for external notifications.
 - **Timezone** plus **Scheduled Run Times** (HHMM, comma-separated, e.g., `0400,1600`) for the built-in scheduler.
-- **Channel Databases:** Toggle US, UK, CA, NL, etc. for OTA callsign matching.
 
 ## Action Sequence
 
-1. Save credentials and select your Channel Profile (not "All").
-2. Run **Preview Changes** to generate a CSV in `/data/exports/` showing proposed matches. The CSV header includes recommendations such as "lower threshold to 75" or "add 'UK' to ignore tags."
-3. Review the CSV.
-4. Run **Add Stream(s) to Channels** to apply.
-5. For US over-the-air channels, run the dedicated callsign-matching action to refine OTA matches.
-6. If upgrading from a pre-scheduler version, run **Cleanup Orphaned Tasks** to remove leftover Celery schedules.
+1. Save settings and select your Channel Profile (not "All").
+2. Run **Validate Settings** to confirm configuration.
+3. Run **Load/Process Channels** to seed the match table.
+4. Enable **Dry Run Mode** and run **Match & Assign Streams** to generate a CSV in `/data/exports/` showing proposed matches. The CSV header includes recommendations such as "set Match Sensitivity to Loose" or "add a tag to Custom Ignore Tags."
+5. Review the CSV.
+6. Disable **Dry Run Mode** and run **Match & Assign Streams** to apply.
+7. Run **Sort Alternate Streams** to re-rank backup streams attached to each channel.
+8. For US over-the-air channels, run **Match US OTA Only** to refine OTA matches with callsign-aware logic.
+9. Run **Manage Channel Visibility** to toggle channels based on whether streams are attached.
+10. Use **Update Schedule** to save scheduler settings, and **Clear Operation Lock** if a previous run got stuck.
 
 ## Important Notes
 
@@ -36,4 +46,4 @@ Match streams to channels via fuzzy logic, rank alternates by physical quality (
 - Watch progress with: `docker logs -f dispatcharr | grep "Stream-Mapparr"`. Wait for `✅ COMPLETED` before queuing the next action.
 - Operations can take 5–15+ minutes on large catalogs.
 - The Channel Profile must exist and must not be "All" — the plugin will refuse to run otherwise.
-- To stop a runaway operation, restart the container: `docker restart dispatcharr`. The operation lock expires after 10 minutes on its own.
+- To stop a runaway operation, restart the container: `docker restart dispatcharr`. The operation lock expires after 10 minutes on its own, or you can clear it manually with **Clear Operation Lock**.

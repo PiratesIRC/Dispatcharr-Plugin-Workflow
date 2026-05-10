@@ -12,6 +12,6 @@ If you have not created one, see the Dispatcharr documentation on [Channel Profi
 
 Several plugins make bulk changes that cannot be undone. Back up the Dispatcharr database before running any of them. Backup instructions are in the [Dispatcharr troubleshooting docs](https://dispatcharr.github.io/Dispatcharr-Docs/troubleshooting/?h=backup#how-can-i-make-a-backup-of-the-database).
 
-## Container Tools
+## API Credentials
 
-The IPTV Checker plugin requires `ffmpeg` and `ffprobe` inside the Dispatcharr container. The scheduler also requires `pytz`. Install or verify these before running the workflow.
+Modern Dispatcharr releases give plugins direct database/ORM access — there is no longer a need to configure a Dispatcharr URL, username, or password in any of these plugins. If your plugin still shows credential fields, update the plugin to its current release.
