@@ -65,6 +65,7 @@ plugins:
 
 nav:
   - Home: index.md
+  - Which plugins do I need?: choosing.md
   - Prerequisites: prerequisites.md
   - Workflow:
     - 1. IPTV Checker: workflow/01-iptv-checker.md
@@ -73,6 +74,7 @@ nav:
     - 4. EPG Janitor: workflow/04-epg-janitor.md
     - Bonus - Event Channel Managarr: workflow/05-event-channel-managarr.md
   - Alternative - Lineuparr: lineuparr.md
+  - Scheduling and Run Order: scheduling.md
   - Reference:
     - Plugin Links: reference/plugin-links.md
     - Related Resources: reference/related-resources.md

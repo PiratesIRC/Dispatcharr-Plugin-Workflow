@@ -5,6 +5,9 @@ A practical, step-by-step workflow for cleaning up your Dispatcharr lineup after
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/PiratesIRC/Dispatcharr-Plugin-Workflow)
 [![Discord](https://img.shields.io/badge/Discord-Discussion-5865F2?logo=discord&logoColor=white)](https://discord.gg/Sp45V5BcxU)
 
+!!! tip "New here? You probably do not need all six plugins."
+    They overlap — four of them do fuzzy name matching, three can change channel visibility, two assign EPG. Start with **[Which plugins do I need?](choosing.md)**, which tells you what each one is for, which to skip, and where they tread on each other's toes.
+
 ## What This Is
 
 Dispatcharr does the heavy lifting of streaming IPTV from M3U sources, but the channel list you end up with after import is rarely usable as-is. Stream URLs go dead, channel names are inconsistent across providers, EPG sources disagree with each other, and event channels show stale information. This guide sequences six community plugins by [PiratesIRC](https://github.com/PiratesIRC) into a workflow that gets your lineup from "imported" to "watchable."
@@ -39,6 +42,8 @@ flowchart TD
 
 ## Where to Start
 
-1. Read the [Prerequisites](prerequisites.md) — particularly the Channel Profile requirement, which trips up most first-time users.
-2. Back up your Dispatcharr database.
-3. Work the steps in order. Each plugin's output feeds the next plugin's input.
+1. Read **[Which plugins do I need?](choosing.md)** — the six plugins overlap, and you can probably skip some.
+2. Read the [Prerequisites](prerequisites.md) — particularly the Channel Profile requirement, which trips up most first-time users.
+3. Back up your Dispatcharr database. Several of these plugins delete things: Stream-Mapparr replaces a channel's entire stream list, and Lineuparr deletes channels it could not match. Each page's danger callout spells out what it can destroy.
+4. Work the steps in order. Each plugin's output feeds the next plugin's input.
+5. When you are happy with the result, see [Scheduling and run order](scheduling.md) to keep it that way — and to avoid the plugins undoing each other.
