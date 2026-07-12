@@ -9,7 +9,7 @@ Mirror a real TV provider's channel lineup in one operation: create channel grou
 Not sure whether you want this or the step-by-step workflow? See [Which plugins do I need?](choosing.md).
 
 !!! danger "Full Sync DELETES channels it could not match"
-    This is the surprise that catches people. In a Lineuparr-managed group, any channel that ends the run with **no streams attached is deleted**. So a lineup channel your M3U cannot supply is not left empty for you to fill in later — it is removed.
+    This is the surprise that catches people. In a Lineuparr-managed group, any channel that ends the run with **no streams attached is deleted**. So a lineup channel your M3U cannot supply is not left empty for you to fill in later. It is removed.
 
     Both **Full Sync** and **Apply Stream Match Only** do this.
 
@@ -61,11 +61,11 @@ Fifteen lineups ship with the plugin. Any extra `*_lineup.json` file you drop in
 
 - **Lineup File:** Default `US_DirecTV-Premier_lineup.json`. Pick the file for the provider you want to mirror.
 - **M3U Source:** The M3U source whose streams are matched against the lineup's channels.
-- **Channel Profile:** Default `_none`. This does **not** decide where channels are created — they are always created in the Lineuparr groups. It only decides which profile the matched channels are *enabled* in afterwards.
-- **Channel Group Prefix:** Blank does **not** mean "no prefix" — blank auto-derives one from the lineup name. To suppress it entirely, type the literal word `none`. Include your own trailing separator to control the format (for example `US ` or `DTV-`).
+- **Channel Profile:** Default `_none`. This does **not** decide where channels are created: they are always created in the Lineuparr groups. It only decides which profile the matched channels are *enabled* in afterwards.
+- **Channel Group Prefix:** Blank does **not** mean "no prefix": blank auto-derives one from the lineup name. To suppress it entirely, type the literal word `none`. Include your own trailing separator to control the format (for example `US ` or `DTV-`).
 - **Category Detail:** Default `Normal`. How granular the auto-created groups are.
 - **Match Sensitivity:** Default `Normal`. Relax it if streams are not matching; tighten it to reduce false positives. On a multi-country M3U, use **Strict**.
-- **Channel Numbering:** Default `Use Channel Database Numbers` — the provider's real channel numbers.
+- **Channel Numbering:** Default `Use Channel Database Numbers`: the provider's real channel numbers.
 - **Starting Channel Number:** Only applies in **Use Specific Number** mode. It is ignored in the other numbering modes.
 - **Order Matched Streams by Quality:** Default true. Sorts alternate streams by resolution and FPS.
 - **Preserve Existing Streams:** Default **false**. Set it to **true** to append rather than replace, and to stop unmatched channels being deleted. The most safety-relevant setting on this page.
@@ -77,7 +77,7 @@ Fifteen lineups ship with the plugin. Any extra `*_lineup.json` file you drop in
 - **EPG Sources for Matching:** A free-text field, **not** a dropdown. Blank = every source. Otherwise a comma-separated list supporting `*` / `?` wildcards (for example `UK*`), where **sources listed earlier win**.
 
 !!! warning "Matching reads the stream name only, never its group"
-    A common misconception. Putting a stream in the right group does not help it match — only the stream's *name* is compared. On a multi-country M3U this is why a Spanish channel can match a UK one; use **Strict** sensitivity and lineup-appropriate M3U sources.
+    A common misconception. Putting a stream in the right group does not help it match. Only the stream's *name* is compared. On a multi-country M3U this is why a Spanish channel can match a UK one; use **Strict** sensitivity and lineup-appropriate M3U sources.
 
 ![Lineuparr settings with Lineup File, M3U Source, and Channel Profile fields](screenshots/lineuparr-settings.png)
 
@@ -86,18 +86,18 @@ Fifteen lineups ship with the plugin. Any extra `*_lineup.json` file you drop in
 1. Pick a **Lineup File**, **M3U Source**, and **Channel Profile**.
 2. Run **Validate Settings** to confirm the lineup file loads, the M3U source is reachable, and the profile exists.
 3. Run **Preview Stream Match** to see how your streams match the lineup's channels. Review the CSV. Nothing is written.
-4. Decide about **Preserve Existing Streams** before step 5 — see the danger note at the top.
+4. Decide about **Preserve Existing Streams** before step 5. See the danger note at the top.
 5. Run **Full Sync** to create groups and channels, assign streams, EPG and logos in one pass.
 6. Or run the partial actions instead, for finer control:
-    - **Sync Channels Only** — create groups and channels, touching no streams, EPG or logos.
-    - **Apply Stream Match Only** — match streams to existing channels. **Also deletes unmatched channels.**
-    - **Apply EPG Match** — assign EPG only.
-    - **Assign Logos** — apply logos only.
+    - **Sync Channels Only**: create groups and channels, touching no streams, EPG or logos.
+    - **Apply Stream Match Only**: match streams to existing channels. **Also deletes unmatched channels.**
+    - **Apply EPG Match**: assign EPG only.
+    - **Assign Logos**: apply logos only.
 7. Run **Re-sort Streams by Quality** to re-rank the alternates on each channel.
 8. Use **Show Status** to check on a running job or see the last result, and **Clear CSV Exports** to clean up old previews.
 
 ## Important Notes
 
 - **Requires Dispatcharr v0.20.0+** and at least one M3U source.
-- Lineuparr is an alternative to the [main workflow](index.md), not a replacement for the individual plugins. You can run Lineuparr first and still use the per-plugin steps for fine-tuning afterwards — Stream-Mapparr's quality re-ranking, EPG-Janitor's heal pass. See [Which plugins do I need?](choosing.md) for how they overlap.
+- Lineuparr is an alternative to the [main workflow](index.md), not a replacement for the individual plugins. You can run Lineuparr first and still use the per-plugin steps for fine-tuning afterwards, such as Stream-Mapparr's quality re-ranking or EPG-Janitor's heal pass. See [Which plugins do I need?](choosing.md) for how they overlap.
 - Custom Channel Aliases is the escape hatch when matching fails for a specific channel.

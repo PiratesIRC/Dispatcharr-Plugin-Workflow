@@ -4,13 +4,13 @@ Thanks for your interest in improving the Dispatcharr Plugin Workflow guide.
 
 ## Scope
 
-This repository is a **guide**, not a plugin. Contributions should improve the accuracy, clarity, or completeness of the workflow documentation. Issues with the plugins themselves belong in their respective repositories — see the [Plugin References](reference/plugin-links.md) table.
+This repository is a **guide**, not a plugin. Contributions should improve the accuracy, clarity, or completeness of the workflow documentation. Issues with the plugins themselves belong in their respective repositories. See the [Plugin References](reference/plugin-links.md) table.
 
 ## Ways to Contribute
 
 - **Corrections.** Fix outdated steps, broken links, wrong defaults, or anything that no longer matches current plugin behavior.
 - **Clarifications.** Reword sections that are confusing or ambiguous.
-- **Screenshots.** UI captures of plugin configuration screens or output. Place them in the `docs/screenshots/` folder and reference them from the relevant page. (It must be `docs/screenshots/` — a file placed anywhere else is not built into the site and the image will 404.)
+- **Screenshots.** UI captures of plugin configuration screens or output. Place them in the `docs/screenshots/` folder and reference them from the relevant page. (It must be `docs/screenshots/`: a file placed anywhere else is not built into the site and the image will 404.)
 - **New sections.** Workflow tips, troubleshooting notes, or additional plugin coverage that fits the guide's scope.
 
 ## How to Submit

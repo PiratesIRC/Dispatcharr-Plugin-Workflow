@@ -23,7 +23,7 @@ The full guide lives on the GitHub Pages site, with sidebar navigation, search, 
 
 ## 🤝 Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) — corrections, screenshots, and clarifications welcome. Plugin bugs belong in each plugin's own repository.
+See [CONTRIBUTING.md](CONTRIBUTING.md). Corrections, screenshots, and clarifications welcome. Plugin bugs belong in each plugin's own repository.
 
 ## 📄 License
 

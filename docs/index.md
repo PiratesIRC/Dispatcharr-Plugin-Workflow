@@ -6,13 +6,13 @@ A practical, step-by-step workflow for cleaning up your Dispatcharr lineup after
 [![Discord](https://img.shields.io/badge/Discord-Discussion-5865F2?logo=discord&logoColor=white)](https://discord.gg/Sp45V5BcxU)
 
 !!! tip "New here? You probably do not need all six plugins."
-    They overlap — four of them do fuzzy name matching, three can change channel visibility, two assign EPG. Start with **[Which plugins do I need?](choosing.md)**, which tells you what each one is for, which to skip, and where they tread on each other's toes.
+    They overlap. Four of them do fuzzy name matching, three can change channel visibility, two assign EPG. Start with **[Which plugins do I need?](choosing.md)**, which tells you what each one is for, which to skip, and where they tread on each other's toes.
 
 ## What This Is
 
 Dispatcharr does the heavy lifting of streaming IPTV from M3U sources, but the channel list you end up with after import is rarely usable as-is. Stream URLs go dead, channel names are inconsistent across providers, EPG sources disagree with each other, and event channels show stale information. This guide sequences six community plugins by [PiratesIRC](https://github.com/PiratesIRC) into a workflow that gets your lineup from "imported" to "watchable."
 
-If you prefer to automate most of this in a single action and accept less granular control, see the [Lineuparr alternative](lineuparr.md). Lineuparr mirrors a real TV provider lineup (DIRECTV, DISH, Sky, Foxtel, Telus Optik, Verizon FiOS, ODIDO) and handles channel group creation, channel numbering, fuzzy stream matching, EPG assignment, and logo assignment together. Reach for the workflow in this guide when you need finer control over channel naming, stream selection, EPG repair, or visibility automation.
+If you prefer to automate most of this in a single action and accept less granular control, see the [Lineuparr alternative](lineuparr.md). Lineuparr mirrors a real TV provider lineup (fifteen ship with it, including DIRECTV, DISH, Verizon FiOS, Sky, Freeview, Canal+, Movistar+, Foxtel, Telus Optik and ODIDO) and handles channel group creation, channel numbering, stream matching, EPG assignment, and logo assignment together. Reach for the workflow in this guide when you need finer control over channel naming, stream selection, EPG repair, or visibility automation.
 
 ## The Workflow at a Glance
 
@@ -42,8 +42,8 @@ flowchart TD
 
 ## Where to Start
 
-1. Read **[Which plugins do I need?](choosing.md)** — the six plugins overlap, and you can probably skip some.
-2. Read the [Prerequisites](prerequisites.md) — particularly the Channel Profile requirement, which trips up most first-time users.
+1. Read **[Which plugins do I need?](choosing.md)**. The six plugins overlap, and you can probably skip some.
+2. Read the [Prerequisites](prerequisites.md), particularly the Channel Profile requirement, which trips up most first-time users.
 3. Back up your Dispatcharr database. Several of these plugins delete things: Stream-Mapparr replaces a channel's entire stream list, and Lineuparr deletes channels it could not match. Each page's danger callout spells out what it can destroy.
 4. Work the steps in order. Each plugin's output feeds the next plugin's input.
-5. When you are happy with the result, see [Scheduling and run order](scheduling.md) to keep it that way — and to avoid the plugins undoing each other.
+5. When you are happy with the result, see [Scheduling and run order](scheduling.md) to keep it that way, and to avoid the plugins undoing each other.

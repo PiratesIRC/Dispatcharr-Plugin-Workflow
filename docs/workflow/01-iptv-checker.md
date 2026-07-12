@@ -1,4 +1,4 @@
-# 1. Stream Verification — IPTV Checker
+# 1. Stream Verification: IPTV Checker
 
 **Repository:** [Dispatcharr-IPTV-Checker-Plugin](https://github.com/PiratesIRC/Dispatcharr-IPTV-Checker-Plugin) &nbsp; [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/PiratesIRC/Dispatcharr-IPTV-Checker-Plugin) &nbsp; [![Discord](https://img.shields.io/badge/Discord-Discussion-5865F2?logo=discord&logoColor=white)](https://discord.gg/Sp45V5BcxU)
 
@@ -67,7 +67,7 @@ flowchart TD
 
 ### Recommended approach for large catalogs
 
-- **Use the scheduler.** Enable **Scheduled Checks** with a cron time during your low-traffic hours rather than triggering scans manually. The scheduler also survives Dispatcharr restarts. If cron syntax is unfamiliar, build the expression interactively at [crontab.guru](https://crontab.guru/) — for example, `0 3 * * *` runs once a day at 3 AM.
+- **Use the scheduler.** Enable **Scheduled Checks** with a cron time during your low-traffic hours rather than triggering scans manually. The scheduler also survives Dispatcharr restarts. If cron syntax is unfamiliar, build the expression interactively at [crontab.guru](https://crontab.guru/): for example, `0 3 * * *` runs once a day at 3 AM.
 - **Tune parallel workers.** If your IPTV provider allows N concurrent connections, set **Number of Parallel Workers** to roughly **half of N**. Going higher risks the provider rate-limiting or banning your account; going much lower wastes time.
 - **Consider Windowed Scheduling** for very large catalogs. The plugin will pick up where it left off on the next window, so a multi-day scan does not need to complete in one sitting.
 
@@ -79,12 +79,12 @@ If the browser tab is open, **View Check Progress** gives a live ETA. If you clo
 docker logs -f dispatcharr | grep "IPTV-Checker"
 ```
 
-Wait for `✅ COMPLETED` in the log before queuing the next action — the UI button re-enabling does not always mean the scan finished.
+Wait for `✅ COMPLETED` in the log before queuing the next action. The UI button re-enabling does not always mean the scan finished.
 
 ### Other notes
 
 - Metadata syncing happens automatically during the check and feeds Stream-Mapparr's quality ranking and dead-stream filtering.
 - Run this plugin first so downstream plugins have accurate stream data to work with.
-- The standard Dispatcharr container ships with `ffmpeg`, `ffprobe`, and `pytz` already installed — no manual setup is needed.
+- The standard Dispatcharr container ships with `ffmpeg`, `ffprobe`, and `pytz` already installed, so no manual setup is needed.
 
 ![Enable Scheduled Checks with a cron expression and Windowed Schedule enabled](../screenshots/iptv-checker-scheduler.png)

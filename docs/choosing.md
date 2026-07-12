@@ -35,7 +35,7 @@ flowchart TD
 | Plugin | Install it if… | **Skip it if…** |
 | --- | --- | --- |
 | [IPTV Checker](workflow/01-iptv-checker.md) | You want dead and low-quality streams identified and tagged. | You do not care about pruning dead streams, or your provider is reliable. |
-| [Channel Mapparr](workflow/02-channel-mapparr.md) | Your channel names are inconsistent (`UK: SKY SPORTS F1 FHD`, `Sky Sports F1 HD`). | Your names are already clean, **or you built the lineup with Lineuparr** — it already named them. |
+| [Channel Mapparr](workflow/02-channel-mapparr.md) | Your channel names are inconsistent (`UK: SKY SPORTS F1 FHD`, `Sky Sports F1 HD`). | Your names are already clean, **or you built the lineup with Lineuparr**, which already named them. |
 | [Stream-Mapparr](workflow/03-stream-mapparr.md) | Channels have no streams, the wrong streams, or no failover backups. | **You used Lineuparr** and are happy with its matching. (You can still use Stream-Mapparr afterwards purely to re-rank.) |
 | [EPG-Janitor](workflow/04-epg-janitor.md) | Your guide shows "No Program Information Available". | Your EPG is clean, or you have no EPG source at all. |
 | [Event Channel Managarr](workflow/05-event-channel-managarr.md) | You carry PPV, fight-night, or event channels that sit empty most of the week. | You have no event channels. Most people do not need this. |
@@ -59,15 +59,15 @@ This is the part nobody explains. Several plugins do the same job, and running t
 
     (If a page in this guide says "Loose", it is out of date. The setting is called **Relaxed**.)
 
-    They also all share one escape hatch: when a channel simply refuses to match, define a **Custom Alias** for it. Do not confuse that with **Ignore Tags**, which strips noise like `[FHD]` from names *before* comparing them — a different tool for a different problem.
+    They also all share one escape hatch: when a channel simply refuses to match, define a **Custom Alias** for it. Do not confuse that with **Ignore Tags**, which strips noise like `[FHD]` from names *before* comparing them. That is a different tool for a different problem.
 
 ## The one thing everybody gets wrong
 
 Every plugin here can change a lot of rows at once, and several of them **delete** things you might not expect:
 
-- **Stream-Mapparr's Match & Assign replaces a channel's whole stream list** — it does not add to it.
+- **Stream-Mapparr's Match & Assign replaces a channel's whole stream list**: it does not add to it.
 - **Lineuparr's Full Sync deletes channels it could not match.**
 - **EPG-Janitor's Strip Hidden EPG deletes program data**, which can blank the guide for other channels sharing that EPG entry.
 - **Channel Mapparr's Tag Unknown Channels and logo actions ignore Dry Run Mode** and write immediately.
 
-Each is explained on its own page. Take a backup before your first run of anything, use Dry Run where it exists, and read the danger callout at the top of each page — they are there because these specific behaviours have surprised people.
+Each is explained on its own page. Take a backup before your first run of anything, use Dry Run where it exists, and read the danger callout at the top of each page. They are there because these specific behaviours have surprised people.

@@ -1,6 +1,6 @@
 # Scheduling and run order
 
-Once the lineup is clean, you want it to *stay* clean without doing this by hand every week. This page covers what to run, how often, and — the part that bites people — what order to run things in so the plugins do not undo each other.
+Once the lineup is clean, you want it to *stay* clean without doing this by hand every week. This page covers what to run, how often, and (the part that bites people) what order to run things in so the plugins do not undo each other.
 
 ## Run order matters
 
@@ -23,7 +23,7 @@ flowchart LR
     C --> D["Event Channel Managarr<br/>hide dead events"]
 ```
 
-IPTV Checker sits outside the daily loop — it is slow, and Stream-Mapparr only needs its results to be *reasonably* fresh.
+IPTV Checker sits outside the daily loop. It is slow, and Stream-Mapparr only needs its results to be *reasonably* fresh.
 
 ## Suggested cadence
 
@@ -45,11 +45,11 @@ This catches everyone. There is no single scheduling format across the suite.
 | **IPTV Checker** | cron | `0 3 * * 0` | Its own setting |
 | **Stream-Mapparr** | `HHMM`, comma-separated | `0400,1600` | Dispatcharr's **global** Time Zone |
 | **Event Channel Managarr** | `HHMM`, comma-separated | `0600,1200,1800` | Dispatcharr's **global** Time Zone |
-| **EPG-Janitor** | *(no scheduler)* | — | — |
-| **Channel Mapparr** | *(no scheduler)* | — | — |
+| **EPG-Janitor** | *(no scheduler)* | n/a | n/a |
+| **Channel Mapparr** | *(no scheduler)* | n/a | n/a |
 
 !!! warning "HHMM means HHMM"
-    Stream-Mapparr and Event Channel Managarr accept **`0400`**, not `04:00`. A value with a colon is silently ignored — the schedule simply never fires, with no error to tell you why.
+    Stream-Mapparr and Event Channel Managarr accept **`0400`**, not `04:00`. A value with a colon is silently ignored. The schedule simply never fires, with no error to tell you why.
 
 !!! note "The per-plugin Timezone settings are gone"
     Stream-Mapparr and Event Channel Managarr both used to have their own Timezone field. They now follow **Dispatcharr's global Time Zone** (Settings → General). If that is unset, Event Channel Managarr falls back to UTC. Set the global time zone correctly and everything lines up.
@@ -58,13 +58,13 @@ This catches everyone. There is no single scheduling format across the suite.
 
 The tidiest setup skips fixed times altogether and reacts to your M3U refresh, so work happens exactly when there is new data to process. Both settings need Dispatcharr v0.27+.
 
-- **Stream-Mapparr → Auto-match after M3U refresh** — runs Match & Assign as soon as a refresh completes.
+- **Stream-Mapparr → Auto-match after M3U refresh**: runs Match & Assign as soon as a refresh completes.
 
     !!! warning
         Remember that Match & Assign **replaces** each matched channel's stream list. Turning this on means that runs unattended after every refresh. Only enable it once you are happy with what a manual run produces.
 
-- **Event Channel Managarr → Auto-rescan after M3U refresh** — re-hides event channels that Dispatcharr's Auto Channel Sync just un-hid.
+- **Event Channel Managarr → Auto-rescan after M3U refresh**: re-hides event channels that Dispatcharr's Auto Channel Sync just un-hid.
 
 ## Before you automate anything
 
-Run each plugin by hand at least once, with Dry Run enabled where it exists, and read the danger callout on its page. Several of these actions delete things — see [Which plugins do I need?](choosing.md#the-one-thing-everybody-gets-wrong) for the short list. Automating a destructive action you have not watched run once is how people lose their lineup.
+Run each plugin by hand at least once, with Dry Run enabled where it exists, and read the danger callout on its page. Several of these actions delete things. See [Which plugins do I need?](choosing.md#the-one-thing-everybody-gets-wrong) for the short list. Automating a destructive action you have not watched run once is how people lose their lineup.

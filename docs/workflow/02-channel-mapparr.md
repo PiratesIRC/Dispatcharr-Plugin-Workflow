@@ -1,4 +1,4 @@
-# 2. Channel Organization — Channel Mapparr
+# 2. Channel Organization: Channel Mapparr
 
 **Repository:** [Dispatcharr-Channel-Maparr-Plugin](https://github.com/PiratesIRC/Dispatcharr-Channel-Maparr-Plugin) &nbsp; [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/PiratesIRC/Dispatcharr-Channel-Maparr-Plugin) &nbsp; [![Discord](https://img.shields.io/badge/Discord-Discussion-5865F2?logo=discord&logoColor=white)](https://discord.gg/Sp45V5BcxU)
 
@@ -42,14 +42,14 @@ flowchart TD
 ## Configuration Options
 
 - **Channel Databases:** Comma-separated 2-letter country codes (default `US`).
-- **Match Sensitivity:** `relaxed` / `normal` (default, threshold 80) / `strict` / `exact`. Use **relaxed** if real channels are being missed, **strict** or **exact** to avoid false positives. (There is no `loose` setting — earlier versions of this guide called it that.)
-- **Dry Run Mode:** See the warning below — it does **not** cover every action.
+- **Match Sensitivity:** `relaxed` / `normal` (default, threshold 80) / `strict` / `exact`. Use **relaxed** if real channels are being missed, **strict** or **exact** to avoid false positives. (There is no `loose` setting: earlier versions of this guide called it that.)
+- **Dry Run Mode:** See the warning below: it does **not** cover every action.
 - **Channel Groups to Process** and **Category Organization Groups** to limit scope.
 - **OTA Name Format:** Template using `{NETWORK}`, `{STATE}`, `{CITY}`, `{CALLSIGN}` (default `{NETWORK} - {STATE} {CITY} ({CALLSIGN})`).
 - **Ignored Tags:** Tags stripped before matching (default `[4K], [FHD], [HD], [SD], [Unknown], [Unk], [Slow], [Dead]`). Handles both `[]` and `()` forms.
 - **Unknown Channel Suffix:** Default `" [Unk]"` (with a leading space).
 - **Default Logo:** Logo *display name* from Dispatcharr's Logo Manager, not the filename.
-- **M3U Source**, **M3U Group Filter**, **Category Filter**, **Custom Import Group Name** — used by the **Import M3U Streams** action.
+- **M3U Source**, **M3U Group Filter**, **Category Filter**, **Custom Import Group Name**: used by the **Import M3U Streams** action.
 - **Rate Limiting:** None / Low / Medium / High. Raise it if Dispatcharr starts returning errors during long runs.
 
 !!! danger "Dry Run Mode does not protect every action"
@@ -57,7 +57,7 @@ flowchart TD
 
     These three actions **write to your database immediately, even with Dry Run Mode ON**, and give you no preview:
 
-    - **Tag Unknown Channels** — bulk-renames every unmatched channel to add the suffix.
+    - **Tag Unknown Channels**: bulk-renames every unmatched channel to add the suffix.
     - **Apply Default Logo**
     - **Apply Per-Channel Logos**
 
@@ -73,9 +73,9 @@ flowchart TD
 4. Enable **Dry Run Mode** and run **Rename Channels** to export a CSV preview of the proposed names.
 5. Review the CSV. If too many channels are skipped, set **Match Sensitivity** to `relaxed`, re-run Load & Process, and preview again.
 6. Disable **Dry Run Mode** and run **Rename Channels** to apply the standardized names.
-7. Optionally run **Tag Unknown Channels** to flag whatever did not match. **This writes immediately — Dry Run does not stop it.**
+7. Optionally run **Tag Unknown Channels** to flag whatever did not match. **This writes immediately. Dry Run does not stop it.**
 8. Optionally run **Apply Default Logo** (a single fallback logo) or **Apply Per-Channel Logos** (fuzzy-matches each channel against the public tv-logos repository). **Both write immediately.**
-9. For category sorting, run **Organize by Category** — with **Dry Run Mode** on first to preview, then again with it off to commit.
+9. For category sorting, run **Organize by Category**, with **Dry Run Mode** on first to preview, then again with it off to commit.
 10. Use **Import M3U Streams** if you need to pull streams from an M3U source, **Show Status** to check on a run, and **Clear CSV Exports** to clean up old preview files.
 
 ![Channels page after Organize by Category has populated category groups](../screenshots/channel-mapparr-category-groups.png)
@@ -83,5 +83,5 @@ flowchart TD
 ## Important Notes
 
 - Use the *display name* from the Dispatcharr Logos page for **Default Logo**, not the filename.
-- Always preview with **Dry Run Mode** before running Rename or Organize for the first time on a profile — they touch many channels at once.
+- Always preview with **Dry Run Mode** before running Rename or Organize for the first time on a profile. They touch many channels at once.
 - **Over-the-air channels are matched by the callsign found in the existing channel name.** A callsign that is also an ordinary English word (KING, WHO, WOLF, WAVE, WOOD) is only accepted with corroboration, so a channel named `24/7 KING OF THE HILL` is reported as **skipped** rather than renamed into a Seattle NBC station. If you expected such a channel to be renamed and it was not, this guard is why.

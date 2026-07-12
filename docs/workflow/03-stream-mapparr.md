@@ -1,4 +1,4 @@
-# 3. Stream Association — Stream-Mapparr
+# 3. Stream Association: Stream-Mapparr
 
 **Repository:** [Stream-Mapparr](https://github.com/PiratesIRC/Stream-Mapparr) &nbsp; [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/PiratesIRC/Stream-Mapparr) &nbsp; [![Discord](https://img.shields.io/badge/Discord-Discussion-5865F2?logo=discord&logoColor=white)](https://discord.gg/Sp45V5BcxU)
 
@@ -40,21 +40,21 @@ flowchart TD
 
 ## Configuration Options
 
-### Scope — what is eligible to match
+### Scope: what is eligible to match
 
 - **Profile Name:** Required. Must be a Channel Profile other than "All".
 - **Channel Groups:** Comma-separated; empty = all.
-- **Stream Groups** and **M3U Sources** constrain which streams are eligible. **The order of M3U Sources matters** — streams from sources listed earlier win when ranking. Read the danger note above before narrowing either field.
+- **Stream Groups** and **M3U Sources** constrain which streams are eligible. **The order of M3U Sources matters**: streams from sources listed earlier win when ranking. Read the danger note above before narrowing either field.
 - **Channel Database:** Default `US`. Supplies the channel list and the OTA callsign rules.
 - **Restrict Matching To Same Country:** Only match streams whose detected country matches the channel database. Useful on multi-country M3Us.
 
 ### Matching
 
-- **Match Sensitivity:** `Relaxed (70)` / `Normal (80)` (default) / `Strict (90)` / `Exact (95)`. Use **Relaxed** if too many channels go unmatched, **Strict** to cut false positives. (There is no "Loose" option — older versions of this guide called it that.)
+- **Match Sensitivity:** `Relaxed (70)` / `Normal (80)` (default) / `Strict (90)` / `Exact (95)`. Use **Relaxed** if too many channels go unmatched, **Strict** to cut false positives. (There is no "Loose" option: older versions of this guide called it that.)
 - **Tag Handling:** How tags are treated when comparing names (default `Strip All`).
 - **Ignore Tags (comma-separated):** Extra tags stripped from names before matching.
 - **Custom Aliases:** A JSON object of extra `"Channel": ["Alias", …]` mappings, merged with the built-in alias table. An exact alias hit is force-matched. This is the escape hatch when a channel simply will not match by name.
-- **Overwrite Existing Streams:** Default **true**. True means *replace*, not *add* — see the danger note.
+- **Overwrite Existing Streams:** Default **true**. True means *replace*, not *add*: see the danger note.
 - **Visible Channel Limit:** How many duplicate channels to enable per group (default 1).
 - **Filter Dead Streams:** Skip streams IPTV Checker flagged as dead (0x0 resolution). **Off by default**, so turn it on if you want it.
 
@@ -65,7 +65,7 @@ Sorting decides which stream plays first and which ones failover falls back to. 
 **throughput tier → M3U source order (or quality, if _Prioritize Quality_ is on) → audio channels → audio codec → resolution → FPS**
 
 - **Prioritize Quality:** Rank by resolution and FPS ahead of M3U source order.
-- **Enable Throughput Sorting:** Default **true**. Puts a measured-bandwidth tier ahead of everything else. It only does anything once you have run **🚀 Probe Stream Throughput** — with an empty cache every stream is "unknown" and the tier collapses to a no-op.
+- **Enable Throughput Sorting:** Default **true**. Puts a measured-bandwidth tier ahead of everything else. It only does anything once you have run **🚀 Probe Stream Throughput**: with an empty cache every stream is "unknown" and the tier collapses to a no-op.
 - **Audio Channels Priority** / **Audio Codec Priority:** Ordered lists, best first (for example `5.1, stereo`). Ranked *before* resolution. Empty = off.
 
 ### Throughput probing
@@ -80,7 +80,7 @@ Sorting decides which stream plays first and which ones failover falls back to. 
 
 ### Scheduling and automation
 
-- **Scheduled Run Times:** Comma-separated, **`HHMM` only** — for example `0400,1600`. A value like `04:00` is silently ignored. Times follow **Dispatcharr's global Time Zone** (Settings → General). This plugin no longer has a Timezone setting of its own.
+- **Scheduled Run Times:** Comma-separated, **`HHMM` only**: for example `0400,1600`. A value like `04:00` is silently ignored. Times follow **Dispatcharr's global Time Zone** (Settings → General). This plugin no longer has a Timezone setting of its own.
 - **Scheduled: Match Streams** (default on) and **Scheduled: Sort Streams** (default off) decide what a scheduled slot actually does.
 - **Auto-match after M3U refresh:** Opt-in, default **off**. Runs Match &amp; Assign automatically each time an M3U refresh finishes. Requires Dispatcharr v0.27+ and a Profile to be selected.
 
@@ -112,11 +112,11 @@ Sorting decides which stream plays first and which ones failover falls back to. 
 
 ### The other buttons
 
-- **📊 View Check Progress** — live progress of the run in flight.
-- **📋 View Last Results** — summary of the last completed run.
-- **💾 Update Schedule** — save scheduler settings.
-- **🗑️ Clear CSV Exports** — delete old CSVs from `/data/exports/`.
-- **🧹 Cleanup Orphaned Tasks** and **🔓 Clear Operation Lock** — recovery if a previous run got stuck.
+- **📊 View Check Progress**: live progress of the run in flight.
+- **📋 View Last Results**: summary of the last completed run.
+- **💾 Update Schedule**: save scheduler settings.
+- **🗑️ Clear CSV Exports**: delete old CSVs from `/data/exports/`.
+- **🧹 Cleanup Orphaned Tasks** and **🔓 Clear Operation Lock**: recovery if a previous run got stuck.
 
 ## Important Notes
 

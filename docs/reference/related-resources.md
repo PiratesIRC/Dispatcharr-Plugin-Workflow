@@ -6,4 +6,4 @@
 
 ## License
 
-This guide is provided as-is under the MIT License. The plugins it documents are owned and licensed separately by their respective authors — see each plugin's repository for licensing details.
+This guide is provided as-is under the MIT License. The plugins it documents are owned and licensed separately by their respective authors. See each plugin's repository for licensing details.

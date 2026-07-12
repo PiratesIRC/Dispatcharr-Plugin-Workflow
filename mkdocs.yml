@@ -75,6 +75,8 @@ nav:
     - Bonus - Event Channel Managarr: workflow/05-event-channel-managarr.md
   - Alternative - Lineuparr: lineuparr.md
   - Scheduling and Run Order: scheduling.md
+  - Troubleshooting: troubleshooting.md
+  - Backup and Recovery: backup-and-recovery.md
   - Reference:
     - Plugin Links: reference/plugin-links.md
     - Related Resources: reference/related-resources.md

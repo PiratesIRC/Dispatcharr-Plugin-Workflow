@@ -1,4 +1,4 @@
-# Bonus: Live Events — Event Channel Managarr
+# Bonus: Live Events with Event Channel Managarr
 
 **Repository:** [Dispatcharr-Event-Channel-Managarr-Plugin](https://github.com/PiratesIRC/Dispatcharr-Event-Channel-Managarr-Plugin) &nbsp; [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/PiratesIRC/Dispatcharr-Event-Channel-Managarr-Plugin) &nbsp; [![Discord](https://img.shields.io/badge/Discord-Discussion-5865F2?logo=discord&logoColor=white)](https://discord.gg/Sp45V5BcxU)
 
@@ -31,7 +31,7 @@ flowchart TD
 - **Channel Profile Names** (required, comma-separated for multiple profiles).
 - **Channel Groups** to narrow scope.
 - **Name Source:** `Channel_Name` or `Stream_Name` for rule matching.
-- **Date Format in Channel Names:** `Auto` (default) / US (MM/DD) / EU (DD/MM). This decides how a date in a channel name is read, so **non-US users should check it** — get it wrong and the date rules hide the wrong channels.
+- **Date Format in Channel Names:** `Auto` (default) / US (MM/DD) / EU (DD/MM). This decides how a date in a channel name is read, so **non-US users should check it**: get it wrong and the date rules hide the wrong channels.
 - **Channel Name Event Timezone:** Default `US/Eastern`. Used when extracting a clock time from a channel name.
 - **Event Duration:** How long an event keeps a channel visible after its start time (default 3 hours).
 - **Hide Rules Priority:** Ordered, comma-separated list. Default:
@@ -53,7 +53,7 @@ flowchart TD
 - **Manage Dummy EPG:** Default false. When enabled, **visible channels that have no EPG assigned** are bound to a plugin-managed dummy EPG source, so the guide shows something useful instead of a blank cell.
 
     !!! note "This is the setting that CREATES guide data"
-        Not *Auto-Remove EPG on Hide*, which only clears it. Earlier versions of this guide described Manage Dummy EPG as attaching entries to *hidden* channels — it is the opposite: it applies to **visible** channels that are missing EPG.
+        Not *Auto-Remove EPG on Hide*, which only clears it. Earlier versions of this guide described Manage Dummy EPG as attaching entries to *hidden* channels. It is the opposite: it applies to **visible** channels that are missing EPG.
 
     The guide then shows the event title during its window, `Upcoming at <time>: <title>` before it, and `Ended at <time>: <title>` after it. Turning the setting off detaches the managed EPG cleanly.
 
@@ -80,7 +80,7 @@ flowchart TD
 
 ## Important Notes
 
-- Each scan covers all channels in the profile — visible and hidden — so a channel that picks up a new event is re-shown automatically on the next run.
+- Each scan covers all channels in the profile (visible and hidden), so a channel that picks up a new event is re-shown automatically on the next run.
 - The first matching rule in the priority list wins. Later rules are not evaluated for that channel.
 - The **Force Visible** regex always beats the hide rules. Useful for news, weather, or always-on channels.
 - **Date and time extraction is smarter than a calendar day.** With a `stop:` timestamp in the name, the real end time is used. With a clock time, the end is taken as start + **Event Duration**, in the Channel Name Event Timezone. Only names carrying a bare date fall back to calendar day plus the grace period.
