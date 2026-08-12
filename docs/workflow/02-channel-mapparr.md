@@ -11,8 +11,8 @@ Standardize the names of channels that already exist in Dispatcharr using countr
 
 Twelve country databases ship with the plugin: **AU, BR, CA, DE, ES, FR, IN, MX, NL, NO, UK, US**.
 
-!!! warning "This plugin does not create channels"
-    It works on channels already in your lineup. The optional **Import M3U Streams** action can pull new streams in from an M3U source if you need it.
+!!! warning "Renaming is the main job, but two actions do create channels"
+    Everything in the core sequence works on channels already in your lineup. Two optional actions add new ones: **Import M3U Streams** pulls streams in from an M3U source, and **Create Channels From Streams** builds one channel per broadcast station from streams that are not attached to anything yet. Earlier versions of this guide said the plugin never creates channels, which was true before **Create Channels From Streams** was added.
 
 !!! danger "Back up your database first"
     This plugin makes bulk channel renames and group reassignments that cannot be undone. [Back up the Dispatcharr database](../prerequisites.md#back-up-the-database) before running any actions.
@@ -50,10 +50,31 @@ flowchart TD
 - **Unknown Channel Suffix:** Default `" [Unk]"` (with a leading space).
 - **Default Logo:** Logo *display name* from Dispatcharr's Logo Manager, not the filename.
 - **M3U Source**, **M3U Group Filter**, **Category Filter**, **Custom Import Group Name**: used by the **Import M3U Streams** action.
+- **Match by Market When No Callsign:** Default off. When a channel name gives a market and a channel number but no callsign, such as `ABC 9 HD [SYRACUSE]`, the station is looked up by market instead. A station is accepted only when exactly one fits, so an ambiguous market is left alone rather than guessed at. Leave it off to match on callsigns only.
 - **Rate Limiting:** None / Low / Medium / High. Raise it if Dispatcharr starts returning errors during long runs.
 
+### Creating channels from unattached streams
+
+**Create Channels From Streams** builds one channel per broadcast station from streams that are not attached to any channel. It is not the same as **Import M3U Streams**: that one creates a channel per *stream*, this one creates a channel per *station* and **attaches no streams at all**. You attach streams afterwards, usually with Stream-Mapparr.
+
+- **Stream Groups to Seed From:** Comma-separated stream group names to scan, for example `US| ABC, US| CBS`. Only streams in these groups that are attached to nothing are considered. Empty means the action does nothing.
+- **Channel Group to Create In:** The existing channel group the new channels land in. **The group must already exist**, and a group listed in Channel Groups to Ignore is refused.
+- **First Channel Number to Use:** The first number to assign, for example `5110`. Numbers already in use are skipped, so you do not need a free block. Leave it empty to start above the highest channel number on the system.
+- **Networks to Skip When Creating Channels:** Comma-separated network names, for example `Telemundo, Univision`. A station carrying one is reported and skipped rather than created. The network is read both from the station record and from the stream name, because a low power station record often names no network at all.
+
+### Email reports through Newsflasharr
+
+These three settings do nothing on their own. They hand a report to the separate **Newsflasharr** plugin, which is what actually sends mail.
+
+- **Send notifications to Newsflasharr:** Default off. With Newsflasharr absent or disabled, nothing is sent and nothing fails.
+- **Email A Report After:** `Never` or `Every run that produces an export` (default). Organize by Category only reports in Dry Run, because a real run of it produces no export.
+- **Email Report Format:** `HTML`, `CSV`, or `Both`. A notification carries one attachment, so **Both** sends two separate emails per run rather than one email with two files. Either way both files are written to `/data/channel_mapparr_reports`; this setting only decides which get emailed.
+
+!!! note "The emailed report is not the same file as the CSV export"
+    The emailed report is built specifically for sending and never contains your M3U source names. The CSV exports in `/data/exports` do contain them, in their settings header. Keep that in mind before forwarding one on.
+
 !!! danger "Dry Run Mode does not protect every action"
-    **Dry Run Mode only covers Rename Channels, Organize by Category, and Import M3U Streams.**
+    **Dry Run Mode only covers Rename Channels, Organize by Category, Import M3U Streams, and Create Channels From Streams.**
 
     These three actions **write to your database immediately, even with Dry Run Mode ON**, and give you no preview:
 
@@ -77,6 +98,8 @@ flowchart TD
 8. Optionally run **Apply Default Logo** (a single fallback logo) or **Apply Per-Channel Logos** (fuzzy-matches each channel against the public tv-logos repository). **Both write immediately.**
 9. For category sorting, run **Organize by Category**, with **Dry Run Mode** on first to preview, then again with it off to commit.
 10. Use **Import M3U Streams** if you need to pull streams from an M3U source, **Show Status** to check on a run, and **Clear CSV Exports** to clean up old preview files.
+11. If you are building a lineup from scratch, run **✚ Create Channels** with **Dry Run Mode** on to preview which stations would be created, then again with it off. Attach streams afterwards with Stream-Mapparr.
+12. If you use Newsflasharr for mail, **📧 Email Report Now** sends a report from the last processed channels. It checks that Newsflasharr is installed, enabled, configured and routed, and refuses rather than queueing a report nobody will receive. Queued means written to Newsflasharr's queue, not that it has reached your inbox.
 
 ![Channels page after Organize by Category has populated category groups](../screenshots/channel-mapparr-category-groups.png)
 

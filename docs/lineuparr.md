@@ -95,6 +95,7 @@ Fifteen lineups ship with the plugin. Any extra `*_lineup.json` file you drop in
     - **Assign Logos**: apply logos only.
 7. Run **Re-sort Streams by Quality** to re-rank the alternates on each channel.
 8. Use **Show Status** to check on a running job or see the last result, and **Clear CSV Exports** to clean up old previews.
+9. **✉️ Email Report** hands the newest report to the separate [Newsflasharr](https://github.com/PiratesIRC/Dispatcharr-Newsflasharr-Plugin) plugin for delivery. It sends the report already on disk rather than re-running a match, so run it after a job has finished. It does nothing unless Newsflasharr is installed and routing this plugin's reports to email.
 
 ## Important Notes
 

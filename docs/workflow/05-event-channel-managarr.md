@@ -60,6 +60,23 @@ flowchart TD
 - **Override Empty Existing EPG:** Default false. Lets the managed dummy take over channels that are linked to a real EPG source which has no programmes.
 - **Channel Name Format:** `US` (default) or `SE` (pipe-delimited). If your provider uses the SE format and this is wrong, dummy EPG parses nothing.
 
+#### Channels in more than one timezone
+
+Dispatcharr stores the dummy EPG timezone **on the EPG source**, and reads it once per source with no per-channel override. So if some of your event channels are labelled in one timezone and others in another, a single dummy source cannot serve them both: whichever timezone you pick, the other set renders hours out.
+
+The plugin handles this by provisioning more than one managed dummy source and routing each channel to the right one by its name. You do not configure this and there is nothing to switch on. Two routes exist:
+
+- The **default route** covers names beginning with a slot label such as `PPV 12`, `LIVE EVENT 04` or `EVENT 7`. Its source timezone is the **Channel Name Event Timezone** setting, so this is the one that setting controls.
+- A **second route** covers names that begin with `Next |` or `End |` and carry `(GMT)`, the shape DAZN uses. Its timezone is always UTC, because the provider stamps the zone into the name, so the Channel Name Event Timezone setting does not apply to it.
+
+Times are rendered into **Dispatcharr's own timezone** (Settings, General) whatever the source zone was, so both sets read correctly in your guide.
+
+!!! note "If your provider does not use either naming shape, nothing changes"
+    A channel claimed by no specific route stays with the default managed source, exactly as before. The second route only activates for names matching that pattern, so most installs will never see it. The `SE` channel name format is separate from this and is still controlled entirely by **Channel Name Format** above.
+
+!!! warning "Changing a channel's name can move it between sources"
+    Routing is decided by the channel name. If a rename makes a channel match a different route, the plugin moves it to that route's source on the next run and cleans up the binding it left behind. That is intended, but it does mean a bulk rename from another plugin can shuffle which dummy source your event channels sit on.
+
 ### Auto-rescan after M3U refresh
 
 - **Auto-rescan after M3U refresh:** Default false. Re-runs the scan as soon as an M3U refresh completes.

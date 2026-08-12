@@ -60,6 +60,24 @@ flowchart TD
 - **Custom Channel Aliases (JSON):** Manual overrides for channels whose name matches no EPG entry. This is your main tool when a channel refuses to match.
 - **Fuzzy matching toggles:** Ignore Quality Tags, Regional Tags, Geographic Prefixes, Miscellaneous Tags (all on by default).
 
+### EPG Freshness Watchdog
+
+A background job that watches your EPG **sources** rather than your channels. It never edits channels and never changes an EPG assignment. On each run it looks at every active EPG source and re-triggers Dispatcharr's own refresh for any source that has errored, or whose guide is about to run out of programmes. It is off by default.
+
+- **Enable scheduled watchdog:** Default false. Turning it on is not enough on its own, see the warning below.
+- **Watchdog: check interval (hours):** Default 6. How often the check runs.
+- **Watchdog: refresh when guide ends within (hours):** Default 12. If a source's newest programme ends within this many hours, the source is refreshed now rather than waiting for it to run dry.
+- **Watchdog: excluded source IDs:** Comma-separated EPGSource IDs the watchdog must never touch, for example `39, 21`. Use this for a source you refresh by hand or one with a strict provider rate limit.
+- **Watchdog: log on self-heal:** Default true. Writes a System Event when the watchdog successfully refreshes a source. Failures are always logged whatever this is set to.
+
+!!! warning "Enabling the setting does not arm the schedule. Run Validate Settings."
+    The scheduled job is created when you run **✅ Validate Settings**, not when you tick the checkbox and save. Enable the watchdog, set your interval, then run Validate Settings once. Changing the interval later also needs another Validate Settings run before it takes effect.
+
+!!! note "Silence is the expected result"
+    The watchdog only writes a System Event when it actually refreshes something, or when a refresh fails. If all your EPG sources are healthy it does nothing and logs nothing. An empty System Events list is the normal healthy state, not evidence that the job is broken.
+
+To check a source immediately without waiting for the interval, run **🐕 Run Watchdog**. It performs exactly the same check straight away and reports what it did.
+
 !!! tip "Auto-Match matched nothing against a brand-new EPG source? Turn Allow EPG Without Program Data ON, just once."
     Dispatcharr only imports program data for EPG entries that are already mapped to a channel. So a freshly added EPG source starts with **zero** programs, every candidate gets rejected for having no program data, and Auto-Match appears to do nothing.
 
@@ -77,6 +95,7 @@ flowchart TD
 6. Run **🧹 Apply Heal** to swap broken EPG for working alternatives at or above the Heal threshold.
 7. Use **🏷️ Suffix Bad EPG**, **❌ Remove Bad EPG**, **❌ Remove by REGEX**, or **❌ Remove All in Groups** for manual cleanup.
 8. Use **📊 Status / Results**, **📄 Export CSV**, or **🗑️ Clear Exports** to manage output.
+9. Optionally enable the **EPG Freshness Watchdog** and run **✅ Validate Settings** again to arm it, or run **🐕 Run Watchdog** for a one-off check of your EPG sources.
 
 !!! danger "🙈 Strip Hidden EPG deletes program data, and 'hidden' is not what you think"
     Two separate traps in one button.
@@ -88,7 +107,7 @@ flowchart TD
 ## Important Notes
 
 - **Auto-Match vs. Scan &amp; Heal:** Auto-Match is for initial setup and bulk assignment. Scan &amp; Heal is for repairing EPG that used to work and broke. Run Auto-Match first, then re-run Scan &amp; Heal periodically.
-- **There is no scheduler in this plugin.** Every action is triggered by hand. Earlier versions of this guide suggested scheduling periodic Scan &amp; Heal runs: you cannot, from inside the plugin.
+- **The only thing this plugin can schedule is the EPG Freshness Watchdog.** Everything else, including Auto-Match and Scan &amp; Heal, is triggered by hand. Earlier versions of this guide suggested scheduling periodic Scan &amp; Heal runs: you still cannot, and the watchdog is not a substitute, because it refreshes EPG **sources** and never touches a channel's EPG assignment.
 - Scan &amp; Heal CSV status codes:
     - `HEALED`: a replacement was applied.
     - `SKIPPED_LOW_CONFIDENCE`: a replacement was found but scored below the Heal threshold, so nothing was changed.

@@ -4,7 +4,7 @@
 
 ## Goal
 
-Probe each stream with `ffprobe`, mark dead or low-framerate sources, and sync technical metadata (codecs, resolution, bitrate, FPS) back into the Dispatcharr database. The metadata gathered here is what Stream-Mapparr later uses to rank stream quality and filter out broken sources.
+Probe each stream with `ffprobe`, mark sources that are dead, low-framerate, or broken in a way that still answers the probe, and sync technical metadata (codecs, resolution, bitrate, FPS) back into the Dispatcharr database. The metadata gathered here is what Stream-Mapparr later uses to rank stream quality and filter out broken sources.
 
 !!! danger "Back up your database first"
     This plugin makes bulk changes that cannot be undone. [Back up the Dispatcharr database](../prerequisites.md#back-up-the-database) before running any actions.
@@ -47,6 +47,28 @@ flowchart TD
 - **Enable Scheduled Checks**, **Scheduled Check Times** (cron syntax), **Scheduler Timezone**, **Export CSV for Schedule**.
 - **Use Windowed Schedule** with **Window End Mode**, **Window Duration**, **Window End Time**, and **Reset Window Progress** for time-bounded scans that pick up where they left off.
 
+### Finding streams that answer but are not watchable
+
+A stream can pass `ffprobe` perfectly and still be useless: a black picture, a still frame, no sound, or a short file looping. Four optional checks catch those. **All four are off by default**, because the first three cost decode time on every stream.
+
+- **Detect Blank-Screen Streams:** Decodes a few seconds with ffmpeg's `blackdetect` filter and marks all-black streams Dead under the `Black Screen` error type. Tuned by **Blank-Screen Sample** (default 6 seconds of video decoded), **Continuous Blank Required** (default 3 seconds, which should stay a few seconds below the sample so connection and keyframe latency do not eat the whole window), and **Blank-Screen ffmpeg Timeout** (default 20 seconds wall clock, after which the stream is left Alive rather than guessed at).
+- **Detect Frozen-Video Streams:** Checks the same decoded sample for a continuous run of identical frames. **Frozen-Video Minimum** (default 4 seconds) is automatically reduced to fit inside the sample, because a value at or above the sample length could never be reached.
+- **Detect Silent-Audio Streams:** Measures the mean volume of the decoded sample and marks anything at or below **Silence Threshold** (default -70 dBFS) as Dead. Streams with no audio track at all are skipped, since they cannot be silent. The default sits between digitally silent audio, which measures about -91 dB, and the quietest real channel measured at about -44 dB.
+- **Detect Placeholder-File Streams:** Marks any stream reporting a fixed container duration as Dead under the `Placeholder File` error type. A live stream has no fixed duration, so this is a strong signal, and it **adds no probe time at all**. If you enable only one of these four, make it this one.
+
+Blank-screen channels get their own rename format and destination group (**Blank-Screen Channel Rename Format**, **Move Blank-Screen Channels to Group**), and are deliberately excluded from the Dead rename and move actions so they are not tagged twice.
+
+### Scheduled runs can act on their own results
+
+Enabling **Scheduled Checks** only performs the scan. Each follow-up action has its own switch that decides whether the scheduled run also applies it, so an unattended scan can rename, move, delete, tag and email without you present:
+
+- Renaming: **Rename Dead Channels**, **Rename Blank-Screen Channels**, **Rename Low Framerate Channels**, **Add Video Format Suffix**.
+- Moving: **Move Dead Channels**, **Move Blank-Screen Channels**, **Move Low Framerate Channels**.
+- Other: **Restore Recovered Channels**, which un-tags channels that have come back to life, and **Email Report After Scheduled Check**.
+
+!!! danger "Delete Dead Channels After Scheduled Checks removes channels unattended"
+    This one deletes rather than renames, on a schedule, with nobody watching. It is gated behind **Auto-Delete Confirmation**, which you must set to the literal word `DELETE` before it will do anything. Treat that gate as the safety feature it is, and make sure your database backups actually run before you arm it.
+
 ![IPTV Checker settings panel with parallel workers and scheduler visible](../screenshots/iptv-checker-settings.png)
 
 ## Action Sequence
@@ -56,9 +78,10 @@ flowchart TD
 3. Run **Load Group(s)** to pull the channel list. Large lists load in the background.
 4. Run **Start Stream Check**. The scan runs in a background thread and survives browser timeouts.
 5. Monitor with **View Check Progress** for live ETA, then **View Last Results** or **View Results Table** when finished.
-6. Optionally run **Rename Dead Channels**, **Move Dead Channels to Group**, **Rename Low Framerate Channels**, or **Add Video Format Suffix**.
-7. Export with **Export Results to CSV**. Use **Clear CSV Exports** to clean up old exports.
-8. Use **Cancel Stream Check** to stop a running scan, **Cleanup Orphaned Tasks** to clear stale Celery entries, or **Check Scheduler Status** to verify scheduled runs.
+6. Optionally run **Rename Dead Channels**, **Move Dead Channels to Group**, **Rename Low Framerate Channels**, or **Add Video Format Suffix**. If you enabled blank-screen detection, **Rename Blank-Screen Channels** and **Move Blank-Screen Channels to Group** handle those separately.
+7. Run **Restore Recovered Channels** to un-tag channels that were previously marked and now probe clean again. Without it, a channel that recovers keeps its dead-channel name.
+8. Export with **Export Results to CSV**. Use **Clear CSV Exports** to clean up old exports. **Email Report** sends the results if you have mail configured.
+9. Use **Cancel Stream Check** to stop a running scan, **Cleanup Orphaned Tasks** to clear stale Celery entries, or **Check Scheduler Status** to verify scheduled runs.
 
 ## Important Notes
 

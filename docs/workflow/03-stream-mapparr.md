@@ -89,6 +89,11 @@ Sorting decides which stream plays first and which ones failover falls back to. 
 
 - **Wait For IPTV Checker** and **IPTV Checker Max Wait Hours** (6): a scheduled run can block for hours waiting for IPTV Checker to finish first.
 - **Enable Scheduled CSV Export:** Also write a CSV on scheduled runs.
+
+    !!! warning "On versions before 1.26.2241602, check that your schedule is actually firing"
+        The scheduler read its run times from a settings file written by the plugin page, and that file could fall out of step with what the plugin had actually saved. When it did, the plugin logged `No scheduled times configured` and simply never ran, while the settings page kept showing your configured times. Nothing errored, so there was no signal that anything was wrong.
+
+        Version **1.26.2241602** reconciles the file against the saved settings at startup and rewrites it. If you are on an older build, upgrade. Either way, **confirm a scheduled run by its side effects**, a new CSV export or a fresh entry in **📋 View Last Results**, rather than by the times shown on the settings page.
 - **Rate Limiting:** None / Low / Medium / High. Raise it if you see 429 or 5xx errors.
 - **Webhook URL** and **Fire Webhook On Completion:** Discord and Slack URLs are given their native message format automatically.
 
@@ -117,6 +122,9 @@ Sorting decides which stream plays first and which ones failover falls back to. 
 - **💾 Update Schedule**: save scheduler settings.
 - **🗑️ Clear CSV Exports**: delete old CSVs from `/data/exports/`.
 - **🧹 Cleanup Orphaned Tasks** and **🔓 Clear Operation Lock**: recovery if a previous run got stuck.
+- **📊 Preview**: generates a CSV preview without making changes. Use it when you want a preview without switching Dry Run Mode on and back off again.
+- **🧠 Test Rules**: shows what your Stream Name Regex Rules would do across all streams, read-only. Check a new rule here before it touches a matching run.
+- **🌍 Check Countries**: compares each stream's group country against the country suffix on its EPG identifier and reports where the two disagree. It reads two database columns, opens no provider connection and changes nothing, so it is safe to run at any time. Useful when a channel keeps matching a foreign feed.
 
 ## Important Notes
 
