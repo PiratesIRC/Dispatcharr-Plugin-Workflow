@@ -81,10 +81,13 @@ nav:
     - Plugin Links: reference/plugin-links.md
     - Related Resources: reference/related-resources.md
   - Contributing: contributing.md
+  - Disclaimer: disclaimer.md
 
 copyright: >
-  All product names, trademarks, and registered trademarks mentioned in this project are the property of their respective owners.
-  Channel lineup data is community-compiled from publicly available information and is not affiliated with or endorsed by any TV provider.
+  All product names, channel names, network names, callsigns, trademarks and registered trademarks mentioned in this guide are the property of their respective owners.
+  Channel lineup data is community-compiled from publicly available information. This is an independent, community-written guide, not affiliated with, endorsed by, or sponsored by
+  any television network, broadcaster, streaming service or IPTV provider, and not affiliated with the Dispatcharr project beyond documenting plugins written for it.
+  See the <a href="disclaimer/">Disclaimer</a>.
 
 extra:
   social:
