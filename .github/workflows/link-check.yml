@@ -10,13 +10,21 @@ on:
       - "README.md"
       - ".github/workflows/link-check.yml"
 
+# Least privilege. lychee-action reads the checkout and writes a job summary;
+# its `token` input is used only to raise the GitHub API rate limit when
+# checking links into github.com. It posts no comments and opens no issues, so
+# nothing here needs more than read on contents.
+permissions:
+  contents: read
+
 jobs:
   lychee:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Run lychee
-        uses: lycheeverse/lychee-action@v2
+        uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
         with:
           args: --verbose --no-progress './**/*.md'
           fail: true
