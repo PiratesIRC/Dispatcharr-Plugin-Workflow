@@ -4,6 +4,16 @@ on:
   schedule:
     - cron: "0 12 * * 1"
   workflow_dispatch:
+  # Documentation lands on main by direct push here, not only through a pull
+  # request, so a pull-request trigger alone left every pushed page unchecked
+  # until the Monday schedule. Same paths as the pull-request trigger below.
+  push:
+    branches:
+      - main
+    paths:
+      - "docs/**"
+      - "README.md"
+      - ".github/workflows/link-check.yml"
   pull_request:
     paths:
       - "docs/**"
