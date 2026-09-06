@@ -58,6 +58,32 @@ flowchart TD
 - **Visible Channel Limit:** How many duplicate channels to enable per group (default 1).
 - **Filter Dead Streams:** Skip streams IPTV Checker flagged as dead (0x0 resolution). **Off by default**, so turn it on if you want it.
 
+### Matching event slots by what is airing on them
+
+Some providers name pay-per-view and event slots generically, such as `PPV EVENT 04`, on both the channel and the raw stream, and put the real event title only in the EPG programme data. Nothing in a name-matching pass can join those up. **EPG-Aware Placeholder Matching** handles that case by matching such a slot on its **currently airing EPG programme title** instead of its literal name, so a channel you named for a specific event can pick up a generically named incoming stream while that event is the one on air.
+
+**It is off by default, and it changes matching only.** Channel and stream names are never rewritten.
+
+- **Enable EPG-Based Placeholder Matching:** The master switch.
+- **Placeholder Name Patterns (one regex per line):** The gate. A name is treated as a placeholder **only** if it matches one of these, so an ordinary channel name is matched exactly as it is today. This is the setting the scan below exists to help you fill in.
+- **EPG Title Cleanup Rules (JSON):** Applied to the raw programme title before it is used, in the same `[find, replace]` format as the Stream Name Regex Rules. It is what strips a wrapper such as `Next Event: X at 6:00AM on Jul 26` down to `X`.
+- **Skip Titles (comma-separated):** If the cleaned title is one of these, the slot keeps its literal name for that pass. This is for an idle slot, where the guide carries no useful event signal.
+- **Channel Schedule Suffix Cleanup Rules (JSON):** Applied to the *channel* name rather than the stream. If you name event channels with an inline schedule, such as `WWE Monday Night Raw | Monday @ 5`, the default rule strips the trailing annotation so the channel compares as `WWE Monday Night Raw` against the real title instead of losing the match to the extra text.
+- **EPG Event Watch, Source Streams:** Exact stream names of real, permanently named channels that carry an event as time-boxed programming without ever getting a placeholder stream of their own.
+
+#### Finding the patterns you have not written down
+
+**🔍 Scan Placeholders**, added in `1.26.2491549`, reports the numbered stream-name families that your Placeholder Name Patterns do not cover. Before it existed, the setting only ever helped with the naming schemes you had already thought of, and nothing in the interface told apart "this installation has no placeholder families" from "the patterns you wrote match none of them".
+
+The scan replaces the numbers in every stream name with a slot, so `MAX 100` and `MAX 101` become the one family `MAX #`, then reports the families no configured pattern covers, each with an anchored regular expression you can paste straight into the setting.
+
+- **It reports only.** Nothing is ever added to your pattern list, and not every numbered family is a placeholder: a numbered family whose names are already informative matches better as it is.
+- **Families whose streams carry EPG data are listed first and separately.** A placeholder can only be resolved when there is guide data to resolve it from, so this is the part worth acting on. The difference is large in practice: on the installation this was measured against, 131 families were uncovered and only 16 held a stream with an EPG identifier.
+- A family needs at least **three different numbers** in its slot before it counts. Five copies of `HBO 1` from five providers are five sources for one name, not five slots.
+- A digit immediately followed by `K` is left alone, because `4K` and `8K` are resolution tags rather than slot numbers.
+- **It reads one database column, opens no provider connection, changes no setting and writes nothing to the database.** It is safe to run at any time.
+- The full readout goes to `/config/stream-mapparr/placeholder-name-scan.txt`, because the pop-up notification holds only about 280 characters. The detailed list is capped and says how many entries it left out rather than truncating silently. A scan that runs out of its time budget is reported as partial rather than presented as complete.
+
 ### Ranking the alternate streams
 
 Sorting decides which stream plays first and which ones failover falls back to. The full order is:
@@ -95,6 +121,7 @@ Sorting decides which stream plays first and which ones failover falls back to. 
 
         Version **1.26.2241602** reconciles the file against the saved settings at startup and rewrites it. If you are on an older build, upgrade. Either way, **confirm a scheduled run by its side effects**, a new CSV export or a fresh entry in **📋 View Last Results**, rather than by the times shown on the settings page.
 - **Rate Limiting:** None / Low / Medium / High. Raise it if you see 429 or 5xx errors.
+- **Delete CSV Exports Older Than (Days):** Default **0, which keeps everything**. It removes this plugin's own exports from `/data/exports/` after each new one is written, and never touches another plugin's files there.
 - **Webhook URL** and **Fire Webhook On Completion:** Discord and Slack URLs are given their native message format automatically.
 
 ![Profile Name field with a non-All profile selected](../screenshots/stream-mapparr-profile-selection.png)
@@ -124,6 +151,7 @@ Sorting decides which stream plays first and which ones failover falls back to. 
 - **🧹 Cleanup Orphaned Tasks** and **🔓 Clear Operation Lock**: recovery if a previous run got stuck.
 - **📊 Preview**: generates a CSV preview without making changes. Use it when you want a preview without switching Dry Run Mode on and back off again.
 - **🧠 Test Rules**: shows what your Stream Name Regex Rules would do across all streams, read-only. Check a new rule here before it touches a matching run.
+- **🔍 Scan Placeholders**: reports the numbered stream-name families your Placeholder Name Patterns do not cover, with a regex to paste for each. Read-only, and described in full [above](#finding-the-patterns-you-have-not-written-down).
 - **🌍 Check Countries**: compares each stream's group country against the country suffix on its EPG identifier and reports where the two disagree. It reads two database columns, opens no provider connection and changes nothing, so it is safe to run at any time. Useful when a channel keeps matching a foreign feed.
 
 ## Important Notes
@@ -132,7 +160,7 @@ Sorting decides which stream plays first and which ones failover falls back to. 
     Short jobs run inline and return their real result. Longer jobs run in the background: the button re-enables immediately, which does **not** mean the job finished. Watch **📊 View Check Progress**, and read **📋 View Last Results** when it is done.
 
 - Docker logs still work if you prefer them: `docker logs -f dispatcharr | grep "Stream-Mapparr"`. Wait for `✅ COMPLETED` before queuing the next action.
-- Operations can take 5–15+ minutes on large catalogs.
+- Operations can take 5 to 15 minutes or more on large catalogs.
 - The Channel Profile must exist and must not be "All". The plugin refuses to run otherwise.
 - Only one long-running action runs at a time. The operation lock expires after 10 minutes by itself, or clear it with **🔓 Clear Operation Lock**.
 - **East and West feeds are routed automatically.** If you have both `Starz Encore` and `STARZ Encore (W)`, each is given its own zone's feed as the primary stream.

@@ -52,6 +52,7 @@ flowchart TD
 - **M3U Source**, **M3U Group Filter**, **Category Filter**, **Custom Import Group Name**: used by the **Import M3U Streams** action.
 - **Match by Market When No Callsign:** Default off. When a channel name gives a market and a channel number but no callsign, such as `ABC 9 HD [SYRACUSE]`, the station is looked up by market instead. A station is accepted only when exactly one fits, so an ambiguous market is left alone rather than guessed at. Leave it off to match on callsigns only.
 - **Rate Limiting:** None / Low / Medium / High. Raise it if Dispatcharr starts returning errors during long runs.
+- **Delete CSV Exports Older Than (Days):** Default **0, which keeps everything**. It runs after each export and only removes this plugin's own files from the shared export directory, never the file just written and never the last surviving one.
 
 ### Creating channels from unattached streams
 

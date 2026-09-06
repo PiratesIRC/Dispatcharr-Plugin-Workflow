@@ -12,7 +12,7 @@ A practical, step-by-step workflow for cleaning up your Dispatcharr lineup after
 
 Dispatcharr does the heavy lifting of streaming IPTV from M3U sources, but the channel list you end up with after import is rarely usable as-is. Stream URLs go dead, channel names are inconsistent across providers, EPG sources disagree with each other, and event channels show stale information. This guide sequences six community plugins by [PiratesIRC](https://github.com/PiratesIRC) into a workflow that gets your lineup from "imported" to "watchable."
 
-If you prefer to automate most of this in a single action and accept less granular control, see the [Lineuparr alternative](lineuparr.md). Lineuparr mirrors a real TV provider lineup (fifteen ship with it, including DIRECTV, DISH, Verizon FiOS, Sky, Freeview, Canal+, Movistar+, Foxtel, Telus Optik and ODIDO) and handles channel group creation, channel numbering, stream matching, EPG assignment, and logo assignment together. Reach for the workflow in this guide when you need finer control over channel naming, stream selection, EPG repair, or visibility automation.
+If you prefer to automate most of this in a single action and accept less granular control, see the [Lineuparr alternative](lineuparr.md). Lineuparr mirrors a real TV provider lineup (twenty ship with it, including DIRECTV, DISH, Verizon FiOS, Optimum, Spectrum, Sky, Freeview, Canal+, Movistar+, Foxtel, Telus Optik and ODIDO) and handles channel group creation, channel numbering, stream matching, EPG assignment, and logo assignment together. Reach for the workflow in this guide when you need finer control over channel naming, stream selection, EPG repair, or visibility automation.
 
 ## The Workflow at a Glance
 
@@ -37,6 +37,13 @@ flowchart TD
 | 4 | [EPG Janitor](workflow/04-epg-janitor.md) | Find and repair channels with broken EPG assignments. |
 | Bonus | [Event Channel Managarr](workflow/05-event-channel-managarr.md) | Toggle visibility of event channels based on EPG state. |
 | Alt | [Lineuparr](lineuparr.md) | One-click lineup mirroring real TV providers. |
+
+Two further plugins support that work without being steps in it, and neither changes anything in your lineup:
+
+| Plugin | Purpose |
+| --- | --- |
+| [Newsflasharr](supporting/newsflasharr.md) | Delivers the reports the other plugins produce, to any of seven destinations. Five of the plugins above send through it. |
+| [Dustarr](supporting/dustarr.md) | Records which channels actually get watched and reports the ones that do not. Read-only. |
 
 ![Dispatcharr Plugins page with all six plugins installed](screenshots/dispatcharr-plugins-installed.png)
 

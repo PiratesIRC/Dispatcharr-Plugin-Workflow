@@ -17,4 +17,4 @@ Then open `http://127.0.0.1:8000/`.
 
 ## Reporting issues
 
-Use the issue templates. Plugin bugs belong in the plugin's own repository — see [Plugin References](https://piratesirc.github.io/Dispatcharr-Plugin-Workflow/reference/plugin-links/).
+Use the issue templates. Plugin bugs belong in the plugin's own repository. See [Plugin References](https://piratesirc.github.io/Dispatcharr-Plugin-Workflow/reference/plugin-links/).

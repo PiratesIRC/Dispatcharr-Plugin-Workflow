@@ -37,15 +37,17 @@ flowchart TD
 - **Hide Rules Priority:** Ordered, comma-separated list. Default:
   ```
   [InactiveRegex],[BlankName],[WrongDayOfWeek],[NoEventPattern],
-  [EmptyPlaceholder],[PastDate:0],[FutureDate:2],[UndatedAge:2],
-  [ShortDescription],[ShortChannelName]
+  [EmptyPlaceholder],[PastDate:0],[FutureDate:2],[UndatedEnded],
+  [UndatedAge:2],[ShortDescription],[ShortChannelName]
   ```
   Also available: `[NoEPG]`, `[NumberOnly]`, `[PastDate:days]`, `[PastDate:days:Xh]`, `[FutureDate:days]`, `[UndatedAge:days]`, `[InactiveRegex]`.
+- **Undated Event Grace Period (Hours):** Default 1. Applies to the `[UndatedEnded]` rule, which is newer than the rest of the list and hides a channel once its event has *finished* rather than once the channel has aged. The end is inferred as the date the channel was first seen, plus the clock time read from its name, plus the Event Duration. Raise this for events that overrun.
 - **Regex: Channel Names to Ignore / Mark Channel as Inactive / Force Visible Channels.**
 - **Duplicate Handling Strategy:** `lowest_number` / `highest_number` / `longest_name`, plus a **Keep Duplicate Channels** override.
 - **Past Date Grace Period (Hours):** Default 4.
 - **Auto-Remove EPG on Hide:** Default true. This *clears* EPG from channels as they are hidden. It does not create anything.
 - **Rate Limiting:** None / Low / Medium / High.
+- **Delete CSV Exports Older Than (Days):** Default **0, which keeps everything**. It removes this plugin's own exports after each new one is written, and leaves other plugins' files in the shared directory alone.
 - **Scheduled Run Times** (`HHMM`, comma-separated) and **Enable Scheduled CSV Export**. Scheduled runs and all date/day rules follow **Dispatcharr's global Time Zone** (Settings → General); if that is unset they fall back to UTC. This plugin no longer has a Timezone setting of its own.
 
 ### Managed dummy EPG
@@ -59,6 +61,9 @@ flowchart TD
 
 - **Override Empty Existing EPG:** Default false. Lets the managed dummy take over channels that are linked to a real EPG source which has no programmes.
 - **Channel Name Format:** `US` (default) or `SE` (pipe-delimited). If your provider uses the SE format and this is wrong, dummy EPG parses nothing.
+- **Per-Group EPG Sources (one per line):** Gives a named channel group its own dummy EPG source, so groups that need a different timezone, event duration or title pattern do not have to share one. Write one mapping per line as `Group Name = Source Name`, for example `NFL Sunday Ticket = ECM - NFL`. A group you do not list keeps the shared source, so a blank field changes nothing.
+
+    The group must also be in scan scope, meaning it appears in **Channel Groups** or that field is blank; otherwise the mapping creates a source and moves no channels into it. **The plugin seeds a listed source once and then never writes to it again**, so from that point its timezone, duration, patterns and templates are yours to edit in Dispatcharr's own EPG source editor. Removing a line moves those channels back to the shared source on the next applied run. Run **🔎 Validate** after editing this.
 
 #### Channels in more than one timezone
 

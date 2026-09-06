@@ -10,3 +10,10 @@ All plugins in this guide are developed and maintained by [PiratesIRC](https://g
 | Stream Mapparr | [Stream-Mapparr](https://github.com/PiratesIRC/Stream-Mapparr) |
 | EPG Janitor | [Dispatcharr-EPG-Janitor-Plugin](https://github.com/PiratesIRC/Dispatcharr-EPG-Janitor-Plugin) |
 | Event Channel Managarr | [Dispatcharr-Event-Channel-Managarr-Plugin](https://github.com/PiratesIRC/Dispatcharr-Event-Channel-Managarr-Plugin) |
+
+Two further plugins support the workflow without being part of it:
+
+| Plugin | Repository |
+| --- | --- |
+| Newsflasharr (notification delivery) | [Dispatcharr-Newsflasharr-Plugin](https://github.com/PiratesIRC/Dispatcharr-Newsflasharr-Plugin) |
+| Dustarr (channel usage metrics) | [Dispatcharr-Dustarr-Plugin](https://github.com/PiratesIRC/Dispatcharr-Dustarr-Plugin) |

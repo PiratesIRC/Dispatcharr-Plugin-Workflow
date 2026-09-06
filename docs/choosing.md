@@ -41,6 +41,15 @@ flowchart TD
 | [Event Channel Managarr](workflow/05-event-channel-managarr.md) | You carry PPV, fight-night, or event channels that sit empty most of the week. | You have no event channels. Most people do not need this. |
 | [Lineuparr](lineuparr.md) | You want a real provider's lineup (numbering, groups, logos, EPG) built for you in one action. | You already have a curated lineup you like, or you want fine-grained control at each step. |
 
+### Two more that are not part of the workflow
+
+Neither of these organizes your lineup, and neither is required by anything above. They change nothing in Dispatcharr, so they carry none of the risk the six do.
+
+| Plugin | Install it if… | **Skip it if…** |
+| --- | --- | --- |
+| [Newsflasharr](supporting/newsflasharr.md) | You want any of the plugins above to email or post their reports. It is the only thing in the suite that delivers a notification, so a report setting elsewhere does nothing without it. | You read the reports as CSV files on disk and want no mail. |
+| [Dustarr](supporting/dustarr.md) | You want to know which channels nobody in the house actually watches, so you can cut the lineup down. | You are happy carrying channels you never watch, or you have just built the lineup and have no viewing history yet. |
+
 ## Where they overlap
 
 This is the part nobody explains. Several plugins do the same job, and running them in the wrong order makes them fight each other.

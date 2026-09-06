@@ -31,22 +31,30 @@ IPTV Checker sits outside the daily loop. It is slow, and Stream-Mapparr only ne
 | --- | --- | --- |
 | **IPTV Checker** | Weekly, overnight | A full scan of several thousand streams can take many hours. Window it so it is not running while people are watching. |
 | **Stream-Mapparr** | Daily, or after each M3U refresh | Has a built-in scheduler, and can also trigger itself automatically on M3U refresh (see below). |
-| **EPG-Janitor** | As needed | **No scheduler.** Every action is manual. |
+| **EPG-Janitor** | As needed | **The only thing it can schedule is the EPG Freshness Watchdog**, which refreshes EPG *sources* and never touches a channel's assignment. Auto-Match and Scan & Heal are manual. |
 | **Event Channel Managarr** | Every few hours | Event channels turn over through the day. Also set **Auto-rescan after M3U refresh**, or Dispatcharr's Auto Channel Sync will un-hide everything on the next refresh. |
 | **Channel Mapparr** | Rarely | Run it when you add a provider or your names drift. It has no scheduler. |
 | **Lineuparr** | Rarely | Re-run when the provider's lineup changes. |
+| **Dustarr** | Weekly or monthly | Optional. It changes nothing in Dispatcharr, so its schedule cannot collide with anything else here. See [Dustarr](supporting/dustarr.md). |
 
-## Three plugins, three different time formats
+## Every plugin states its schedule differently
 
 This catches everyone. There is no single scheduling format across the suite.
 
 | Plugin | Format | Example | Time zone used |
 | --- | --- | --- | --- |
-| **IPTV Checker** | cron | `0 3 * * 0` | Its own setting |
+| **IPTV Checker** | cron | `0 3 * * 0` | Dispatcharr's **global** Time Zone |
 | **Stream-Mapparr** | `HHMM`, comma-separated | `0400,1600` | Dispatcharr's **global** Time Zone |
 | **Event Channel Managarr** | `HHMM`, comma-separated | `0600,1200,1800` | Dispatcharr's **global** Time Zone |
-| **EPG-Janitor** | *(no scheduler)* | n/a | n/a |
+| **EPG-Janitor** | *(watchdog only, set as an interval in hours)* | `6` | n/a |
+| **Dustarr** | *(a fixed choice: off, daily, weekly or monthly, always at 03:00)* | Weekly | Dispatcharr's **global** Time Zone |
 | **Channel Mapparr** | *(no scheduler)* | n/a | n/a |
+
+!!! warning "In IPTV Checker, several cron expressions are separated by a semicolon"
+    A comma already means something inside a cron field, where it lists values, so `0 0,8,16 * * *` is *one* expression meaning midnight, 8 AM and 4 PM. Two separate expressions are joined with a semicolon: `0 4 * * * ; 0 3 1 * *`. Since `1.26.2481600` an expression that could never fire is refused rather than saved and silently ignored, and a valid one is described back to you in words.
+
+!!! note "IPTV Checker has no timezone setting of its own, and never had an on/off switch"
+    Earlier versions of this guide listed **Enable Scheduled Checks** and a **Scheduler Timezone** on that plugin. Neither exists. A non-empty **Scheduled Check Times** field is what arms the schedule, the times follow Dispatcharr's global Time Zone (falling back to UTC if it cannot be read), and you have to click **💾 Save Schedule** afterwards.
 
 !!! warning "HHMM means HHMM"
     Stream-Mapparr and Event Channel Managarr accept **`0400`**, not `04:00`. A value with a colon is silently ignored. The schedule simply never fires, with no error to tell you why.

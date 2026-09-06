@@ -37,13 +37,18 @@ flowchart TD
 
 ## Supported Lineups
 
-Fifteen lineups ship with the plugin. Any extra `*_lineup.json` file you drop in is picked up automatically.
+Twenty lineups ship with the plugin, five more than when this page was first written. Any extra `*_lineup.json` file you drop in is picked up automatically.
 
 | Lineup file | Package | Country | Channels |
 | --- | --- | :---: | :---: |
 | `US_DirecTV-Premier_lineup.json` | DIRECTV Premier | US | 351 |
 | `US_DISH-Top250_lineup.json` | DISH America's Top 250 | US | 215 |
 | `US_Verizon-FIOS_lineup.json` | Verizon The Most Fios TV | US | 202 |
+| `US_Verizon-FIOS-All-11743_lineup.json` | Verizon Fios, all channels (ZIP 11743) | US | 508 |
+| `US_Optimum_lineup.json` | Optimum | US | 342 |
+| `US_Spectrum-Tampa-Bay-All_lineup.json` | Spectrum Tampa Bay, all | US | 409 |
+| `US_Spectrum-Tampa-Bay-No-Spanish_lineup.json` | Spectrum Tampa Bay, no Spanish | US | 322 |
+| `US_Spectrum-Tampa-Bay-Spanish-Only_lineup.json` | Spectrum Tampa Bay, Spanish only | US | 87 |
 | `US_Combined_lineup.json` | US Combined (DIRECTV + DISH + FiOS) | US | 463 |
 | `UK_SkyTV_ENG_full_lineup.json` | Sky TV UK (England) Full | UK | 316 |
 | `UK_SkyTV_ENG_simple_lineup.json` | Sky TV UK (England) Simple | UK | 297 |
@@ -72,7 +77,8 @@ Fifteen lineups ship with the plugin. Any extra `*_lineup.json` file you drop in
 - **Quality-Aware Stream Matching:** Default false. Keeps e.g. `TF1` and `TF1 UHD` in their own quality tiers instead of matching across them.
 - **Refresh EPG After Match:** Default **true**. Triggers a Dispatcharr EPG refresh once EPG matching finishes.
 - **Single Channel Match:** Scope Preview, Apply Stream Match, Apply EPG and Assign Logos to one channel by name. **Full Sync ignores it.**
-- **Rate Limiting:** Default `None`. Raise it if Dispatcharr returns errors during long runs.
+- **Rate Limiting:** Default `None`. Raise it if Dispatcharr returns errors during long runs. The options now name what each one costs you: `Low` pauses 0.1 seconds per channel, `Medium` 0.5 seconds, `High` 2 seconds.
+- **Delete CSV Exports Older Than (Days):** Default **0, which keeps everything**. It removes this plugin's own previews after each new export, leaving other plugins' files alone.
 - **Custom Channel Aliases (JSON):** Manual overrides for channels whose stream name does not match. Define the override once and Full Sync respects it on every run.
 - **EPG Sources for Matching:** A free-text field, **not** a dropdown. Blank = every source. Otherwise a comma-separated list supporting `*` / `?` wildcards (for example `UK*`), where **sources listed earlier win**.
 

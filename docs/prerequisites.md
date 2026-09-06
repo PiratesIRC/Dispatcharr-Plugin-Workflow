@@ -1,6 +1,6 @@
 # Prerequisites
 
-These plugins assume Dispatcharr already has channels in your lineup and at least one **Channel Profile other than "All"** is set up. Channels are typically auto-created during M3U import or built holistically by the Lineuparr Plugin. None of the plugins in this guide create channels from scratch. They organize, validate, map streams to, repair EPG on, or toggle visibility for channels that already exist.
+These plugins assume Dispatcharr already has channels in your lineup and at least one **Channel Profile other than "All"** is set up. Channels are typically auto-created during M3U import or built in one pass by the Lineuparr plugin. None of the plugins in this guide create channels from scratch. They organize, validate, map streams to, repair EPG on, or toggle visibility for channels that already exist.
 
 ## Channel Profile Requirement
 

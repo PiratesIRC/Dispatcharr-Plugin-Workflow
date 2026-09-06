@@ -24,7 +24,9 @@ Check the time format. **Stream-Mapparr and Event Channel Managarr accept `HHMM`
 
 Check the time zone too. Both plugins follow **Dispatcharr's global Time Zone** (Settings, then General). Neither has a Timezone setting of its own any more. See [Scheduling and run order](scheduling.md).
 
-Note that **EPG-Janitor and Channel Mapparr have no scheduler at all**. Their actions must be triggered by hand.
+Note that **Channel Mapparr has no scheduler at all**, and that the only thing **EPG-Janitor** can schedule is its EPG Freshness Watchdog. Everything else in both plugins is triggered by hand.
+
+In **IPTV Checker**, check that you clicked **💾 Save Schedule** after editing the times, and that two separate cron expressions are joined with a semicolon rather than a comma. That plugin has no on/off switch for scheduling and no timezone setting of its own: a non-empty **Scheduled Check Times** field is what arms it, and the times follow Dispatcharr's global Time Zone.
 
 ## The plugin refuses to run against my profile
 

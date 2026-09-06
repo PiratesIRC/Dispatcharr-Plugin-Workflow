@@ -74,6 +74,9 @@ nav:
     - 4. EPG Janitor: workflow/04-epg-janitor.md
     - Bonus - Event Channel Managarr: workflow/05-event-channel-managarr.md
   - Alternative - Lineuparr: lineuparr.md
+  - Supporting plugins:
+    - Newsflasharr - notifications: supporting/newsflasharr.md
+    - Dustarr - who watches what: supporting/dustarr.md
   - Scheduling and Run Order: scheduling.md
   - Troubleshooting: troubleshooting.md
   - Backup and Recovery: backup-and-recovery.md

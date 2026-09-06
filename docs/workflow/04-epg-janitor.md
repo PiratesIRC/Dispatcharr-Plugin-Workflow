@@ -16,7 +16,7 @@ This is EPG data-quality cleanup, not database size optimization.
 A channel is matched to an EPG entry by whichever of two methods scores higher:
 
 - **Structural scoring**: callsign 50 points, state 30, city 20, network 10. Two catches worth knowing: **city only scores if the state already matched**, and **network only counts as a tie-breaker**, never on its own.
-- **Name matching**: the same fuzzy name engine the other plugins use, including your aliases, scoring 85–100.
+- **Name matching**: the same fuzzy name engine the other plugins use, including your aliases, scoring 85 to 100.
 
 The higher of the two wins, capped at 100.
 
@@ -59,16 +59,19 @@ flowchart TD
 - **Allow EPG Without Program Data:** Boolean, default false. See below.
 - **Custom Channel Aliases (JSON):** Manual overrides for channels whose name matches no EPG entry. This is your main tool when a channel refuses to match.
 - **Fuzzy matching toggles:** Ignore Quality Tags, Regional Tags, Geographic Prefixes, Miscellaneous Tags (all on by default).
+- **Delete CSV Exports Older Than (Days):** Default **0, which keeps everything**. It runs after each export and only removes this plugin's own `epg_janitor_*.csv` files, because the export directory is shared with the other plugins.
 
 ### EPG Freshness Watchdog
 
 A background job that watches your EPG **sources** rather than your channels. It never edits channels and never changes an EPG assignment. On each run it looks at every active EPG source and re-triggers Dispatcharr's own refresh for any source that has errored, or whose guide is about to run out of programmes. It is off by default.
 
-- **Enable scheduled watchdog:** Default false. Turning it on is not enough on its own, see the warning below.
-- **Watchdog: check interval (hours):** Default 6. How often the check runs.
-- **Watchdog: refresh when guide ends within (hours):** Default 12. If a source's newest programme ends within this many hours, the source is refreshed now rather than waiting for it to run dry.
-- **Watchdog: excluded source IDs:** Comma-separated EPGSource IDs the watchdog must never touch, for example `39, 21`. Use this for a source you refresh by hand or one with a strict provider rate limit.
-- **Watchdog: log on self-heal:** Default true. Writes a System Event when the watchdog successfully refreshes a source. Failures are always logged whatever this is set to.
+The five settings were renamed in `1.26.2481223`. If you are following an older copy of this guide, the `Watchdog:` prefix is gone from each of them.
+
+- **Enable Scheduled Watchdog:** Default false. Turning it on is not enough on its own, see the warning below.
+- **Check Interval (Hours):** Default 6. How often the check runs.
+- **Refresh When Guide Ends Within (Hours):** Default 12. If a source's newest programme ends within this many hours, the source is refreshed now rather than waiting for it to run dry.
+- **Excluded EPG Source IDs:** Comma-separated EPGSource IDs the watchdog must never touch, for example `39, 21`. Use this for a source you refresh by hand or one with a strict provider rate limit.
+- **Log a System Event On Self-Heal:** Default true. Writes a System Event when the watchdog successfully refreshes a source. Failures are always logged whatever this is set to.
 
 !!! warning "Enabling the setting does not arm the schedule. Run Validate Settings."
     The scheduled job is created when you run **✅ Validate Settings**, not when you tick the checkbox and save. Enable the watchdog, set your interval, then run Validate Settings once. Changing the interval later also needs another Validate Settings run before it takes effect.
