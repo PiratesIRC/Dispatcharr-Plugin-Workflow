@@ -4,6 +4,7 @@ A practical, step-by-step workflow for cleaning up your Dispatcharr lineup after
 
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/PiratesIRC/Dispatcharr-Plugin-Workflow)
 [![Discord](https://img.shields.io/badge/Discord-Discussion-5865F2?logo=discord&logoColor=white)](https://discord.gg/Sp45V5BcxU)
+[![Sponsor](https://img.shields.io/badge/Sponsor-db61a2?logo=githubsponsors&logoColor=white)](https://github.com/sponsors/PiratesIRC)
 
 !!! tip "New here? You probably do not need all six plugins."
     They overlap. Four of them do fuzzy name matching, three can change channel visibility, two assign EPG. Start with **[Which plugins do I need?](choosing.md)**, which tells you what each one is for, which to skip, and where they tread on each other's toes.
