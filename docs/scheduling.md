@@ -23,7 +23,7 @@ flowchart LR
     C --> D["Event Channel Managarr<br/>hide dead events"]
 ```
 
-IPTV Checker sits outside the daily loop. It is slow, and Stream-Mapparr only needs its results to be *reasonably* fresh.
+IPTV Checker sits outside the daily loop. It is slow, and Stream-Mapparr only needs its results to be *reasonably* fresh. If you want Stream-Mapparr to act on a scan the moment it finishes, see [Running Stream-Mapparr after an IPTV Checker scan](#running-stream-mapparr-after-an-iptv-checker-scan).
 
 ## Suggested cadence
 
@@ -72,6 +72,18 @@ The tidiest setup skips fixed times altogether and reacts to your M3U refresh, s
         Remember that Match & Assign **replaces** each matched channel's stream list. Turning this on means that runs unattended after every refresh. Only enable it once you are happy with what a manual run produces.
 
 - **Event Channel Managarr → Auto-rescan after M3U refresh**: re-hides event channels that Dispatcharr's Auto Channel Sync just un-hid.
+
+## Running Stream-Mapparr after an IPTV Checker scan
+
+An IPTV Checker scan can run for many hours, so a fixed Stream-Mapparr time either sorts against stale results or has to be guessed well after the scan usually ends. Since Stream-Mapparr `1.26.2561754` and IPTV Checker `1.26.2561754`, the two can hand off directly. Turn on both:
+
+- **IPTV Checker → Trigger Stream-Mapparr After Scheduled Check**
+- **Stream-Mapparr → Run After IPTV Checker Scan**
+
+When a scheduled scan reaches the end of its channel list, IPTV Checker calls Stream-Mapparr, which runs its ticked scheduled steps at once. A scan that was cut short does not trigger it.
+
+!!! note "The fixed time still matters"
+    From Stream-Mapparr `1.26.2571153`, if a scan is still running at Stream-Mapparr's fixed time, the fixed-time run steps aside for the trigger, so the two never sort the same channels at once. On a day with no scan, the fixed time runs as usual.
 
 ## Before you automate anything
 

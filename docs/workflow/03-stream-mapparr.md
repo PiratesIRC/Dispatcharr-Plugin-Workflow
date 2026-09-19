@@ -114,6 +114,10 @@ Sorting decides which stream plays first and which ones failover falls back to. 
         With this on, the rebuild described in the danger note runs unattended after every refresh. Only enable it once you are happy with what a manual run produces.
 
 - **Wait For IPTV Checker** and **IPTV Checker Max Wait Hours** (6): a scheduled run can block for hours waiting for IPTV Checker to finish first.
+- **Run After IPTV Checker Scan:** Opt-in, default **off**, added in `1.26.2561754`. When IPTV Checker finishes a scheduled scan that reached the end of its channel list, Stream-Mapparr runs the same steps its schedule runs (Sort Streams and Match Streams, whichever are ticked) straight away, instead of at the next fixed time. IPTV Checker must have its own **Trigger Stream-Mapparr After Scheduled Check** setting on as well (IPTV Checker `1.26.2561754` or later). A run already in progress is left alone, and the next scan tries again. The CSV header of such a run reads `Scheduled (after IPTV Checker scan)`.
+
+    !!! note "Keep a fixed time as well"
+        From `1.26.2571153`, when this setting is on and IPTV Checker is still scanning at your fixed time, the fixed-time run steps aside and leaves the day to the scan's trigger. If that triggered run then fails, there is no Sort that day. With no scan running, the fixed time runs as normal, so keeping one costs nothing.
 - **Enable Scheduled CSV Export:** Also write a CSV on scheduled runs.
 
     !!! warning "On versions before 1.26.2241602, check that your schedule is actually firing"
@@ -163,5 +167,8 @@ Sorting decides which stream plays first and which ones failover falls back to. 
 - Operations can take 5 to 15 minutes or more on large catalogs.
 - The Channel Profile must exist and must not be "All". The plugin refuses to run otherwise.
 - Only one long-running action runs at a time. The operation lock expires after 10 minutes by itself, or clear it with **🔓 Clear Operation Lock**.
-- **East and West feeds are routed automatically.** If you have both `Starz Encore` and `STARZ Encore (W)`, each is given its own zone's feed as the primary stream.
+- **East and West feeds are routed automatically.** If you have both `Starz Encore` and `STARZ Encore (W)`, each is given its own zone's feed. A plain or East channel gets East and unmarked streams; a West channel gets West streams only. A stream with no East or West in its name counts as the East feed.
+
+    !!! warning "From 1.26.2621504, unmarked streams leave your West channels"
+        Earlier versions kept unmarked streams on a West channel, so a West channel could fail over to a feed three hours ahead. After updating, the next **Sort Alternate Streams**, or a **Match &amp; Assign** with Overwrite Existing Streams on, removes those unmarked streams from any West channel that also carries a West feed. With Overwrite off, Match &amp; Assign stops adding them but removes nothing. If no West stream matches at all, a West channel that already has streams is left exactly as it is, and one with no streams gets the East feed rather than nothing.
 - **Common-word callsigns are guarded.** A stream called `24/7 KING OF THE HILL` will not be attached to the Seattle NBC station `KING-TV` just because the word "KING" appears. A callsign that is also an ordinary English word (KING, WHO, WOLF, WAVE, WOOD) has to be corroborated by the station's network or city before it counts.

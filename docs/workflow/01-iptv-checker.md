@@ -123,6 +123,7 @@ This happened more often than it sounds: **opening the Dispatcharr Plugins page 
 ### Other notes
 
 - Metadata syncing happens automatically during the check and feeds Stream-Mapparr's quality ranking and dead-stream filtering.
+- **Trigger Stream-Mapparr After Scheduled Check** (default off, `1.26.2561754` and later): when a scheduled check reaches the end of its channel list, it tells Stream-Mapparr to run its scheduled steps against the fresh results. Stream-Mapparr needs **Run After IPTV Checker Scan** on too. See [Scheduling and Run Order](../scheduling.md#running-stream-mapparr-after-an-iptv-checker-scan).
 - Run this plugin first so downstream plugins have accurate stream data to work with.
 - The standard Dispatcharr container ships with `ffmpeg`, `ffprobe`, and `pytz` already installed, so no manual setup is needed.
 
