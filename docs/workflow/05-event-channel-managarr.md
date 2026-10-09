@@ -30,7 +30,8 @@ flowchart TD
 
 - **Channel Profile Names** (required, comma-separated for multiple profiles).
 - **Channel Groups** to narrow scope.
-- **Name Source:** `Channel_Name` or `Stream_Name` for rule matching.
+- **Name Source:** `Channel_Name` or `Stream_Name` for rule matching. It applies to every group in the scan.
+- **Stream Name Groups:** Comma-separated channel groups that read the stream name whatever **Name Source** says. Use it when one group keeps fixed channel names while the provider renames its streams for each week's events, and another group's channel names are fine as they are. Each listed group must also be in **Channel Groups**. A listed group that is also mapped in **Per-Group EPG Sources** gets a newly created source that reads the stream name for the guide too (Dispatcharr 0.32.0 or later); a source that already exists is left alone, so set its **Name Source** in Dispatcharr's EPG source editor.
 - **Date Format in Channel Names:** `Auto` (default) / US (MM/DD) / EU (DD/MM). This decides how a date in a channel name is read, so **non-US users should check it**: get it wrong and the date rules hide the wrong channels.
 - **Channel Name Event Timezone:** Default `US/Eastern`. Used when extracting a clock time from a channel name.
 - **Event Duration:** How long an event keeps a channel visible after its start time (default 3 hours).
@@ -60,7 +61,7 @@ flowchart TD
     The guide then shows the event title during its window, `Upcoming at <time>: <title>` before it, and `Ended at <time>: <title>` after it. Turning the setting off detaches the managed EPG cleanly.
 
 - **Override Empty Existing EPG:** Default false. Lets the managed dummy take over channels that are linked to a real EPG source which has no programmes.
-- **Channel Name Format:** `US` (default) or `SE` (pipe-delimited). If your provider uses the SE format and this is wrong, dummy EPG parses nothing.
+- **Channel Name Format:** `US` (default), `SE` (pipe-delimited) or `AT` (the date after an `@`, as in `NHL 01: Kraken @ Red Wings @ 9 Oct 07:00 PM ET`, day first or month first). If this does not match your provider's names, dummy EPG reads no event out of them and shows the channel name in plain blocks instead.
 - **Per-Group EPG Sources (one per line):** Gives a named channel group its own dummy EPG source, so groups that need a different timezone, event duration or title pattern do not have to share one. Write one mapping per line as `Group Name = Source Name`, for example `NFL Sunday Ticket = ECM - NFL`. A group you do not list keeps the shared source, so a blank field changes nothing.
 
     The group must also be in scan scope, meaning it appears in **Channel Groups** or that field is blank; otherwise the mapping creates a source and moves no channels into it. **The plugin seeds a listed source once and then never writes to it again**, so from that point its timezone, duration, patterns and templates are yours to edit in Dispatcharr's own EPG source editor. Removing a line moves those channels back to the shared source on the next applied run. Run **🔎 Validate** after editing this.
