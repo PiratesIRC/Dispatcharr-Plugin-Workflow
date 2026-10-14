@@ -38,6 +38,18 @@ Dispatcharr's **Auto Channel Sync** re-enables every channel in a synced group o
 
 Turn on **Auto-rescan after M3U refresh** in Event Channel Managarr so it re-hides them immediately after each refresh.
 
+## Groups without a prefix keep appearing overnight
+
+You use Lineuparr and get the groups you expect (`Sky: Entertainment`, `Sky: Music`), but every night more groups appear named only `Entertainment`, `Music` and so on, even with Lineuparr turned off.
+
+**Lineuparr does not create these.** It has no schedule of its own, and every group it creates carries its Channel Group Prefix (unless that prefix is set to `none`).
+
+They come from **Dispatcharr's own M3U refresh**. Each refresh creates a group for every group-title in your provider's playlist, so a provider that files its streams under those names brings the groups back after every refresh, even after you delete them. The account's refresh interval is why it happens on a schedule.
+
+1. Open one of the unprefixed groups. If it holds streams rather than channels, it is a provider group.
+2. On the **M3U Accounts** page, edit the account and open its group settings. Untick the groups you do not want.
+3. Check that **Auto Channel Sync** is off for those groups, unless you want Dispatcharr creating channels in them on every refresh.
+
 ## My channels keep un-hiding, and I use two plugins
 
 Stream-Mapparr's **Manage Channel Visibility** and Event Channel Managarr both toggle channel visibility, using different criteria, and they will undo each other.
