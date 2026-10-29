@@ -88,11 +88,12 @@ The scan replaces the numbers in every stream name with a slot, so `MAX 100` and
 
 Sorting decides which stream plays first and which ones failover falls back to. The full order is:
 
-**throughput tier → M3U source order (or quality, if _Prioritize Quality_ is on) → audio channels → audio codec → resolution → FPS**
+**throughput tier → M3U source order (or quality, if _Prioritize Quality_ is on) → audio channels → audio codec → resolution → FPS → measured bitrate**
 
 - **Prioritize Quality:** Rank by resolution and FPS ahead of M3U source order.
 - **Enable Throughput Sorting:** Default **true**. Puts a measured-bandwidth tier ahead of everything else. It only does anything once you have run **🚀 Probe Stream Throughput**: with an empty cache every stream is "unknown" and the tier collapses to a no-op.
 - **Audio Channels Priority** / **Audio Codec Priority:** Ordered lists, best first (for example `5.1, stereo`). Ranked *before* resolution. Empty = off.
+- **Bitrate Sort Step (kbps):** Default **500**. When streams tie on everything above, the higher measured video bitrate goes first (for example an "HEVC HB" feed ahead of "HEVC LB"). Bitrates are rounded down to this step first, so streams within one step keep their order. A stream with no measured bitrate goes after one that has one. 0 turns it off.
 
 ### Throughput probing
 
