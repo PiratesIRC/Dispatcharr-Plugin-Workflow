@@ -2,7 +2,7 @@
 
 - [Dispatcharr Project](https://github.com/Dispatcharr/Dispatcharr)
 - [Dispatcharr Documentation](https://dispatcharr.github.io/Dispatcharr-Docs/)
-- [Dispatcharr Plugin Listing](https://dispatcharr.github.io/Dispatcharr-Docs/plugin-listing/)
+- [Dispatcharr Plugin Listing](https://dispatcharr.github.io/Dispatcharr-Docs/plugins/#find-plugins)
 
 ## License
 
