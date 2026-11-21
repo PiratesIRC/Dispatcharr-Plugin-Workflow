@@ -36,8 +36,8 @@ Read this before your first run of anything. These are the behaviours that surpr
 
 Most plugins have a Dry Run or Preview mode that writes a CSV instead of touching the database. Use it every time before a first apply.
 
-!!! warning "Dry Run does not cover everything"
-    In **Channel Mapparr**, Dry Run Mode covers four actions: Rename Channels, Organize by Category, Import M3U Streams, and Create Channels From Streams. **Tag Unknown Channels, Apply Default Logo and Apply Per-Channel Logos write immediately even with Dry Run on.**
+!!! warning "A dry run does not always show you what would change"
+    In **Channel Mapparr**, every action honours Dry Run Mode, but only five write a CSV preview: Rename Channels, Organize by Category, Replace Logos (tv-logos), Import M3U Streams, and Create Channels From Streams. **Tag Unknown Channels, Apply Default Logo and Apply Per-Channel Logos only report a count**, so you cannot review which channels they would change.
 
     Check each plugin's page rather than assuming the toggle protects you.
 

@@ -77,6 +77,6 @@ Every plugin here can change a lot of rows at once, and several of them **delete
 - **Stream-Mapparr's Match & Assign replaces a channel's whole stream list**: it does not add to it.
 - **Lineuparr's Full Sync deletes channels it could not match.**
 - **EPG-Janitor's Strip Hidden EPG deletes program data**, which can blank the guide for other channels sharing that EPG entry.
-- **Channel Mapparr's Tag Unknown Channels and logo actions ignore Dry Run Mode** and write immediately.
+- **Channel Mapparr's Tag Unknown Channels and logo actions honour Dry Run Mode but give no preview file**: they only report how many channels they would change.
 
 Each is explained on its own page. Take a backup before your first run of anything, use Dry Run where it exists, and read the danger callout at the top of each page. They are there because these specific behaviours have surprised people.

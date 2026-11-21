@@ -5,11 +5,14 @@
 !!! info "Note the spelling"
     The repository is **Channel-Maparr** with one `p`, while the plugin displays as **Channel Mapparr**. If you are searching GitHub or the Dispatcharr plugin listing and coming up empty, that is why.
 
+!!! info "Requires Dispatcharr v0.34.0 or later"
+    From release `1.26.3251847` the settings page uses the collapsible sections and pick lists that Dispatcharr added in v0.34.0, and the plugin listing does not offer that release to an older Dispatcharr. Settings you saved with an earlier release are carried over and shown as already picked.
+
 ## Goal
 
 Standardize the names of channels that already exist in Dispatcharr using country channel databases, and optionally re-organize them into category groups (News, Sports, Entertainment, and so on).
 
-Twelve country databases ship with the plugin: **AU, BR, CA, DE, ES, FR, IN, MX, NL, NO, UK, US**.
+Thirteen country databases ship with the plugin: **AU, BR, CA, DE, ES, FR, IN, MX, NL, NO, PL, UK, US**.
 
 !!! warning "Renaming is the main job, but two actions do create channels"
     Everything in the core sequence works on channels already in your lineup. Two optional actions add new ones: **Import M3U Streams** pulls streams in from an M3U source, and **Create Channels From Streams** builds one channel per broadcast station from streams that are not attached to anything yet. Earlier versions of this guide said the plugin never creates channels, which was true before **Create Channels From Streams** was added.
@@ -41,15 +44,20 @@ flowchart TD
 
 ## Configuration Options
 
-- **Channel Databases:** Comma-separated 2-letter country codes (default `US`).
+The settings page is divided into collapsible sections; the four that most installs never change (Import M3U Streams, Create Channels From Streams, Emailed Reports and Anonymous Usage Counts) start closed. Seven settings are pick lists: you choose from the countries, groups or categories that exist instead of typing names.
+
+- **Channel Databases:** Pick list of the country databases to load (default `US`). Pick at least one: with none picked, the logo actions and Validate Settings refuse to run.
 - **Match Sensitivity:** `relaxed` / `normal` (default, threshold 80) / `strict` / `exact`. Use **relaxed** if real channels are being missed, **strict** or **exact** to avoid false positives. (There is no `loose` setting: earlier versions of this guide called it that.)
 - **Dry Run Mode:** See the warning below: it does **not** cover every action.
-- **Channel Groups to Process** and **Category Organization Groups** to limit scope.
+- **Channel Groups to Process:** Pick list of every channel group. Limits renaming, tagging and logo actions to the groups picked; empty means every group.
+- **Channel Groups to Ignore:** Pick list of every channel group. Channels in these groups are left alone by renaming, tagging, logos and Organize by Category, and an exclusion wins over Channel Groups to Process.
+- Both group lists start with one wildcard pattern per group-name prefix, the text up to and including the first `:` or `|`. A group named `US| CBS` offers `US|*`, which picks every group whose name starts with `US|` in any letter case, and each pattern shows how many groups it matches, for example `US|* (93 groups)`. A pattern also covers a matching group added later. A group added since the plugin last loaded appears in the lists after you press the refresh control on the Plugins page.
+- **Category Organization Groups:** Pick list of every channel group plus every category in the channel databases: the groups Organize by Category may move channels into or create. Empty means the categories named in the databases.
 - **OTA Name Format:** Template using `{NETWORK}`, `{STATE}`, `{CITY}`, `{CALLSIGN}` (default `{NETWORK} - {STATE} {CITY} ({CALLSIGN})`).
 - **Ignored Tags:** Tags stripped before matching (default `[4K], [FHD], [HD], [SD], [Unknown], [Unk], [Slow], [Dead]`). Handles both `[]` and `()` forms.
 - **Unknown Channel Suffix:** Default `" [Unk]"` (with a leading space).
 - **Default Logo:** Logo *display name* from Dispatcharr's Logo Manager, not the filename.
-- **M3U Source**, **M3U Group Filter**, **Category Filter**, **Custom Import Group Name**: used by the **Import M3U Streams** action.
+- **M3U Source**, **M3U Group Filter**, **Category Filter**, **Custom Import Group Name**: used by the **Import M3U Streams** action. M3U Group Filter is a pick list of the stream groups that hold a stream, applied before matching; Category Filter is a pick list of database categories, applied after matching.
 - **Match by Market When No Callsign:** Default off. When a channel name gives a market and a channel number but no callsign, such as `ABC 9 HD [SYRACUSE]`, the station is looked up by market instead. A station is accepted only when exactly one fits, so an ambiguous market is left alone rather than guessed at. Leave it off to match on callsigns only.
 - **Rate Limiting:** None / Low / Medium / High. Raise it if Dispatcharr starts returning errors during long runs.
 - **Delete CSV Exports Older Than (Days):** Default **0, which keeps everything**. It runs after each export and only removes this plugin's own files from the shared export directory, never the file just written and never the last surviving one.
@@ -58,7 +66,7 @@ flowchart TD
 
 **Create Channels From Streams** builds one channel per broadcast station from streams that are not attached to any channel. It is not the same as **Import M3U Streams**: that one creates a channel per *stream*, this one creates a channel per *station* and **attaches no streams at all**. You attach streams afterwards, usually with Stream-Mapparr.
 
-- **Stream Groups to Seed From:** Comma-separated stream group names to scan, for example `US| ABC, US| CBS`. Only streams in these groups that are attached to nothing are considered. Empty means the action does nothing.
+- **Stream Groups to Seed From:** Pick list of the stream groups to scan, for example `US| ABC` and `US| CBS`. Only streams in these groups that are attached to nothing are considered. Empty means the action does nothing.
 - **Channel Group to Create In:** The existing channel group the new channels land in. **The group must already exist**, and a group listed in Channel Groups to Ignore is refused.
 - **First Channel Number to Use:** The first number to assign, for example `5110`. Numbers already in use are skipped, so you do not need a free block. Leave it empty to start above the highest channel number on the system.
 - **Networks to Skip When Creating Channels:** Comma-separated network names, for example `Telemundo, Univision`. A station carrying one is reported and skipped rather than created. The network is read both from the station record and from the stream name, because a low power station record often names no network at all.
@@ -74,18 +82,12 @@ These three settings do nothing on their own. They hand a report to the separate
 !!! note "The emailed report is not the same file as the CSV export"
     The emailed report is built specifically for sending and never contains your M3U source names. The CSV exports in `/data/exports` do contain them, in their settings header. Keep that in mind before forwarding one on.
 
-!!! danger "Dry Run Mode does not protect every action"
-    **Dry Run Mode only covers Rename Channels, Organize by Category, Import M3U Streams, and Create Channels From Streams.**
+!!! warning "What Dry Run Mode produces differs by action"
+    With **Dry Run Mode** on, no action writes to the database. **Rename Channels, Organize by Category, Replace Logos (tv-logos), Import M3U Streams and Create Channels From Streams** write a CSV preview to `/data/exports`. **Tag Unknown Channels, Apply Default Logo and Apply Per-Channel Logos** only report a count of what they would have done and write no file, so you see how many channels they would change but not which.
 
-    These three actions **write to your database immediately, even with Dry Run Mode ON**, and give you no preview:
+    Earlier versions of this guide said those three wrote even with Dry Run on; that was true before release `1.26.2481147`. Back up before you run any of them for real the first time.
 
-    - **Tag Unknown Channels**: bulk-renames every unmatched channel to add the suffix.
-    - **Apply Default Logo**
-    - **Apply Per-Channel Logos**
-
-    Back up before you run any of them for the first time.
-
-![Channel Mapparr settings with Channel Databases, Match Sensitivity, and Dry Run Mode](../screenshots/channel-mapparr-settings.png)
+![Channel Mapparr settings with Channel Databases, Match Sensitivity, and Dry Run Mode, as drawn before the settings page gained sections](../screenshots/channel-mapparr-settings.png)
 
 ## Action Sequence
 
@@ -95,8 +97,8 @@ These three settings do nothing on their own. They hand a report to the separate
 4. Enable **Dry Run Mode** and run **Rename Channels** to export a CSV preview of the proposed names.
 5. Review the CSV. If too many channels are skipped, set **Match Sensitivity** to `relaxed`, re-run Load & Process, and preview again.
 6. Disable **Dry Run Mode** and run **Rename Channels** to apply the standardized names.
-7. Optionally run **Tag Unknown Channels** to flag whatever did not match. **This writes immediately. Dry Run does not stop it.**
-8. Optionally run **Apply Default Logo** (a single fallback logo) or **Apply Per-Channel Logos** (fuzzy-matches each channel against the public tv-logos repository). **Both write immediately.**
+7. Optionally run **Tag Unknown Channels** to flag whatever did not match. With Dry Run on it reports how many channels it would tag; turn Dry Run off to write.
+8. Optionally run **Apply Default Logo** (a single fallback logo) or **Apply Per-Channel Logos** (fuzzy-matches each channel against the public tv-logos repository). With Dry Run on each reports a count; turn it off to write.
 9. For category sorting, run **Organize by Category**, with **Dry Run Mode** on first to preview, then again with it off to commit.
 10. Use **Import M3U Streams** if you need to pull streams from an M3U source, **Show Status** to check on a run, and **Clear CSV Exports** to clean up old preview files.
 11. If you are building a lineup from scratch, run **✚ Create Channels** with **Dry Run Mode** on to preview which stations would be created, then again with it off. Attach streams afterwards with Stream-Mapparr.
